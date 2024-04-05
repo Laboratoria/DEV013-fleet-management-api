@@ -1,26 +1,13 @@
-from database.db import db, app
-from flask import jsonify
+from flask import Flask, jsonify
 from config import config
-from sqlalchemy import text
 from routes import Taxi
+from database.db import connect_to_db
+from routes.Taxi import main_bp, taxi_bp
 
-# Probar la conexion
-
-
-@app.route('/test_db_connection')
-def test_db_connection():
-    try:
-        result = db.session.execute(text('SELECT 1'))
-        result_json = {
-            'message': 'Conexión exitosa a la base de datos.', 'result': result.scalar()}
-        return jsonify(result_json), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-
+app = Flask(__name__)
+app.register_blueprint(main_bp)
+app.register_blueprint(taxi_bp)
 if __name__ == '__main__':
     app.config.from_object(config['development'])
 
-    # Blueprints
-    app.register_blueprint(Taxi.main, url_prefix='/api/taxies')
     app.run()

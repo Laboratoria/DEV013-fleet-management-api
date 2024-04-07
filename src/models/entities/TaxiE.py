@@ -1,12 +1,12 @@
 from sqlalchemy import Column, Integer, String
-from database.db import Base
+from database.db import db
 
 
-class Taxi(Base):
+class Taxi(db.Model):
     __tablename__ = 'taxies'
 
-    id = Column(Integer, primary_key=True)
-    plate = Column(String(20), nullable=False)
+    id = db.Column(Integer, primary_key=True)
+    plate = db.Column(String(20), nullable=False)
 
     def __repr__(self):
         return f"<Taxi(id={self.id}, plate='{self.plate}')>"

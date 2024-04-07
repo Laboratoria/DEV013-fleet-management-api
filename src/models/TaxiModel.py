@@ -1,4 +1,4 @@
-from database.db import connect_to_db
+from database.db import db
 from .entities.TaxiE import Taxi
 
 
@@ -6,14 +6,14 @@ class TaxiModel():
 
     @classmethod
     def get_taxi(cls):
-        connection = connect_to_db()
+       # connection = connect_to_db()
         try:
-            query = connection.query(Taxi).all()
+            query = Taxi.query.all()
             return query
         except Exception as ex:
             raise Exception(ex)
-        finally:
-            connection.close()
+        # finally:
+        #     connection.close()
 
     @classmethod
     def get_taxi_as_json(cls):

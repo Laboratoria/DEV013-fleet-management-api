@@ -5,11 +5,12 @@ from .entities.TaxiE import Taxi
 class TaxiModel():
 
     @classmethod
-    def get_taxi(cls):
+    def get_taxi(cls, page=1, per_page=5):
        # connection = connect_to_db()
         try:
-            query = Taxi.query.all()
-            return query
+            taxies_paginated = Taxi.query.paginate(
+                page=page, per_page=per_page)
+            return taxies_paginated
         except Exception as ex:
             raise Exception(ex)
         # finally:

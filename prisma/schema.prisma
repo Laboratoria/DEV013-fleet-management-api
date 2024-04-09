@@ -6,7 +6,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model Taxis {
   id           Int            @id(map: "taxis_pkey")
   plate        String?

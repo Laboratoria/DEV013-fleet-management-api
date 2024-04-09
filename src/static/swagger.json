@@ -1,0 +1,74 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Fleet Management API",
+    "description": "API for managing taxi fleet",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Taxi",
+      "description": "Get list of taxis"
+    }
+  ],
+  "paths": {
+    "/taxi": {
+      "get": {
+        "tags": [
+          "Taxi"
+        ],
+        "summary": "Get list of taxis",
+        "description": "Returns a list of all taxis",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Taxi"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Taxi": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "plate": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responses": {
+      "NotFound": {
+        "description": "(Not found) Information not found"
+      },
+      "BadRequest": {
+        "description": "(Bad Request)The request is not valid"
+      },
+      "ServerError": {
+        "description": "(Server Error) No response from server"
+      }
+    }
+  }
+}

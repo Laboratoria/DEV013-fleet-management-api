@@ -49,6 +49,9 @@ const swaggerDefinition: OAS3Definition = {
                         format: "int64",
                         example: 9275
                     },
+                    taxi_id:{
+                        type: "integer",
+                    },
                     date: {
                         type: "string",
                         format: "date-time",

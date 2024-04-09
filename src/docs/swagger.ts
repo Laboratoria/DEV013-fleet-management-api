@@ -19,7 +19,7 @@ const swaggerDefinition: OAS3Definition = {
         //   },
         // },
         schemas: {
-            taxis: {
+            Taxis: {
                 type: "object",
                 // required: ["plate"],
                 properties: {
@@ -31,11 +31,14 @@ const swaggerDefinition: OAS3Definition = {
                     },
                 },
             },
-            trajectories: {
+            Trajectories: {
                 type: "object",
                 // required: ["date", "latitude","longitude"],
                 properties: {
                     id: {
+                        type: "integer",
+                    },
+                    taxi_id:{
                         type: "integer",
                     },
                     date: {

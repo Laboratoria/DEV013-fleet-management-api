@@ -24,10 +24,12 @@ const swaggerDefinition: OAS3Definition = {
                 // required: ["plate"],
                 properties: {
                     id: {
-                        type: "integer"
+                        type: "integer",
+                        example: 9275
                     },
                     plate: {
                         type: "string",
+                        example: "ENPB-7532"
                     },
                 },
             },
@@ -37,21 +39,44 @@ const swaggerDefinition: OAS3Definition = {
                 properties: {
                     id: {
                         type: "integer",
+                        format: "int64",
+                        description: "ID de la trajectoria",
+                        example: 22237
                     },
-                    taxi_id:{
+                    taxi_id: {
                         type: "integer",
+                        description: "ID de taxi elacionado con esta trayectoria",
+                        format: "int64",
+                        example: 9275
                     },
                     date: {
-                        type: "string"
+                        type: "string",
+                        format: "date-time",
+                        example: "2008-02-02 17:15:21"
                     },
                     latitude: {
-                        type: "double"
+                        type: "double",
+                        description: "Latitud de la posición",
+                        format: "int64",
+                        example: 116.27741
                     },
                     longitude: {
-                        type: "double"
+                        type: "double",
+                        description: "Longitud de la posición",
+                        format: "int64",
+                        example: 39.89958
                     },
                 },
             },
+            Error: {
+                type: "object",
+                properties: {
+                    message: {
+                        type: "string",
+                        description: "Mensaje de error"
+                    }
+                }
+            }
         },
     },
 };

@@ -3,7 +3,6 @@ import { TaxisController } from '../controller/taxis';
 
 const router: Router = express.Router();
 
-
 /**
  * Post track
  * @openapi

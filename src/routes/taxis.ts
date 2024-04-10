@@ -3,12 +3,29 @@ import { TaxisController } from '../controller/taxis';
 
 const router: Router = express.Router();
 
+
+/**
+ * Post track
+ * @openapi
+ * /taxis:
+ *    get:
+ *      tags:
+ *        - taxis
+ *      summary: "Obtener taxis"
+ *      description: Este endpoint es para obtener los taxis  
+ *      responses:
+ *        '200':
+ *          description: Operación exitosa.
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: array
+ *                      items:
+ *                          $ref: '#/components/schemas/Taxis'
+ */
 router.get('/taxis', TaxisController.getAllTaxis);
 router.get('/location',TaxisController.getLocationHistory);
 router.get('/lastLocation',TaxisController.getLastLocation)
-router.get('/taxis/:id',TaxisController.getTaxiById);
-router.post('/taxis',TaxisController.postTaxi);
-router.put('/taxis/:id',TaxisController.putTaxiById);
-router.delete('/taxis/:id',TaxisController.deleteByTaxi)
+router.post('/taxis',TaxisController.postTaxi)
 
 export default router;

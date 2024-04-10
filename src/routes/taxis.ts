@@ -3,6 +3,7 @@ import { TaxisController } from '../controller/taxis';
 
 const router: Router = Router();
 
-router.get('/', TaxisController.getAllTaxis);
+router.get('/taxis', TaxisController.getAllTaxis);
+router.get('/location',TaxisController.getLocationHistory)
 
 export default router;

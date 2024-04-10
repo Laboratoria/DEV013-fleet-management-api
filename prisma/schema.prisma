@@ -6,6 +6,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model Taxis {
   id           Int            @id(map: "taxis_pkey")
   plate        String?
@@ -14,9 +15,9 @@ model Taxis {
 
 model Trajectories {
   id        Int       @id(map: "trajectories_pkey") @default(autoincrement())
-  taxi_id   Int?
+  taxiId    Int?
   date      DateTime? @db.Timestamp(6)
   latitude  Float?
   longitude Float?
-  Taxis     Taxis?    @relation(fields: [taxi_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_taxis")
+  Taxis     Taxis?    @relation(fields: [taxiId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_taxis")
 }

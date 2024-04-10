@@ -6,7 +6,7 @@ const PORT: number = 3000;
 app.use(express.json());
 
 
-app.use('/taxis', taxiRouter);
+app.use('/', taxiRouter);
 app.use('/', (req: Request, res: Response): void => {
     res.send('Hello world!');
 });

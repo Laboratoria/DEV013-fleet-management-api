@@ -3,7 +3,6 @@ import { TaxisController } from '../controller/taxis';
 
 const router: Router = Router();
 
-
 /**
  * Post track
  * @openapi

@@ -58,11 +58,30 @@ export const TaxisController = {
     },
     getLastLocation: async (req: Request, res: Response) => {
         try {
-            const lastLocation = await prisma.taxis.findMany({});
+            const lastLocation = await prisma.$queryRaw`
+            SELECT tax.id, tra.date, tra.latitude, tra.longitude
+            FROM "Taxis" tax
+            INNER JOIN (
+              SELECT taxi_id, date, latitude, longitude,
+                     ROW_NUMBER() OVER (PARTITION BY taxi_id ORDER BY date DESC) AS row_num
+              FROM "Trajectories"
+            ) AS tra ON tax.id = tra.taxi_id AND tra.row_num = 1;
+          `;
             return res.status(200).json(lastLocation);
 
         } catch (error:any) {
             return res.status(500).json({ message: error.message })
         }
-    }
+    },
+    postTaxi: async (req:Request,res:Response)=>{
+        try {
+            const { id,plate} = req.body;
+            const newTaxi=await prisma.taxis.create({data:{
+                id,plate
+            }})
+            return res.status(201).json(newTaxi);
+        } catch (error:any) {
+            return res.status(500).json({ message: error.message })
+        }
+    },
 }

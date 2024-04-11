@@ -15,7 +15,7 @@ model Taxis {
 
 model Trajectories {
   id        Int       @id(map: "trajectories_pkey") @default(autoincrement())
-  taxiId    Int?
+  taxiId    Int       @map("taxi_id")
   date      DateTime? @db.Timestamp(6)
   latitude  Float?
   longitude Float?

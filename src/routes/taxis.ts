@@ -3,12 +3,7 @@ import { TaxisController } from '../controller/taxis';
 
 const router: Router = Router();
 
-<<<<<<< HEAD
-router.get('/taxis', TaxisController.getAllTaxis);
-router.get('/location',TaxisController.getLocationHistory);
-router.get('/lastLocation',TaxisController.getLastLocation)
-router.post('/taxis',TaxisController.postTaxi)
-=======
+
 /**
  * Post track
  * @openapi
@@ -28,9 +23,12 @@ router.post('/taxis',TaxisController.postTaxi)
  *                      items:
  *                          $ref: '#/components/schemas/Taxis'
  */
+router.get('/taxis', TaxisController.getAllTaxis);
+router.get('/location',TaxisController.getLocationHistory);
+router.get('/lastLocation',TaxisController.getLastLocation)
+router.post('/taxis',TaxisController.postTaxi)
 
 
-router.get('/', TaxisController.getAllTaxis);
->>>>>>> 621298f (feat(taxis.ts):Add documentation to get)
+
 
 export default router;

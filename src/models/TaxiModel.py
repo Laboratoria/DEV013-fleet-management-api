@@ -1,4 +1,3 @@
-from database.db import db
 from .entities.TaxiE import Taxi
 
 

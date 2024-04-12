@@ -1,17 +1,39 @@
-from flask import Blueprint, jsonify, request
-from models.TaxiModel import TaxiModel
-from models.entities.TaxiE import Taxi
 
+from flask import Blueprint, jsonify, request, send_from_directory
+from models.TaxiModel import TaxiModel
+from models.LocationModel import LocationModel
+from models.entities.TaxiE import Taxi
+from config import Config
+from flask_swagger_ui import get_swaggerui_blueprint
 
 main_bp = Blueprint("main_bp", __name__)
+taxi_bp = Blueprint("taxi_bp", __name__)
+location_bp = Blueprint("location_bp", __name__)
+
+# Swagger configuration
+SWAGGER_URL = Config.SWAGGER_URL
+API_URL = Config.API_URL
+
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Fleet Management API"
+    }
+)
+
+# Routes
+
+
+@main_bp.route('/apidocs/swagger.json')
+def swagger_json():
+    return send_from_directory('static', 'swagger.json')
 
 
 @main_bp.route('/')
 def index():
-    return jsonify({'mensaje': 'Pagina principal'})
-
-
-taxi_bp = Blueprint("taxi_bp", __name__)
+    return jsonify({'message': 'Main Page'})
 
 
 @taxi_bp.route('/taxi', methods=['GET'])
@@ -26,6 +48,24 @@ def get_taxies_list():
             'taxies': taxies_list,
             'total_pages': taxies_paginated.pages,
             'current_page': taxies_paginated.page
+        }), 200
+    except Exception as ex:
+        return jsonify({'message': str(ex)}), 500
+
+
+@location_bp.route('/location', methods=['GET'])
+def get_locations_list():
+    try:
+        page = int(request.args.get('page', 1))
+        per_page = 10
+        locations_paginated = LocationModel.get_location(
+            page=page, per_page=per_page)
+        locations_list = [location.to_JSON()
+                          for location in locations_paginated.items]
+        return jsonify({
+            'locations': locations_list,
+            'total_pages': locations_paginated.pages,
+            'current_page': locations_paginated.page
         }), 200
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500

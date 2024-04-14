@@ -41,9 +41,9 @@ export const TaxisController = {
                     // date: true,
                     // latitude: true,
                     // longitude: true,
-                    
-                    Trajectories:{
-                        select:{
+
+                    Trajectories: {
+                        select: {
                             latitude: true,
                             longitude: true,
                             date: true
@@ -69,18 +69,20 @@ export const TaxisController = {
           `;
             return res.status(200).json(lastLocation);
 
-        } catch (error:any) {
+        } catch (error: any) {
             return res.status(500).json({ message: error.message })
         }
     },
-    postTaxi: async (req:Request,res:Response)=>{
+    postTaxi: async (req: Request, res: Response) => {
         try {
-            const { id,plate} = req.body;
-            const newTaxi=await prisma.taxis.create({data:{
-                id,plate
-            }})
+            const { id, plate } = req.body;
+            const newTaxi = await prisma.taxis.create({
+                data: {
+                    id, plate
+                }
+            })
             return res.status(201).json(newTaxi);
-        } catch (error:any) {
+        } catch (error: any) {
             return res.status(500).json({ message: error.message })
         }
     },

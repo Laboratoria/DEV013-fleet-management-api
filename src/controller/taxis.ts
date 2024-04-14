@@ -119,4 +119,15 @@ export const TaxisController = {
             return res.status(500).json({ message: error.message })
         }
     },
+    deleteByTaxi: async (req: Request, res: Response) => {
+        const { id } = req.params;
+        const taxiId = parseInt(id);
+
+        const existingTaxi = await prisma.taxis.findUnique({ where: { id: taxiId } });
+        if (!existingTaxi) {
+            return res.status(404).json({ message: 'No se ha encontrado un taxi con este ID' });
+        }
+        const taxi = await prisma.taxis.delete({ where: { id: taxiId } });
+        return res.status(200).json({ message: 'Se ha eliminado correctamente el Taxi', taxi: taxi });
+    },
 }

@@ -6,6 +6,9 @@ const router: Router = Router();
 router.get('/taxis', TaxisController.getAllTaxis);
 router.get('/location',TaxisController.getLocationHistory);
 router.get('/lastLocation',TaxisController.getLastLocation)
-router.post('/taxis',TaxisController.postTaxi)
+router.get('/taxis/:id',TaxisController.getTaxiById);
+router.post('/taxis',TaxisController.postTaxi);
+router.put('/taxis/:id',TaxisController.putTaxiById);
+router.delete('/taxis/:id',TaxisController.deleteByTaxi)
 
 export default router;

@@ -74,15 +74,19 @@ export const TaxisController = {
         }
     },
     getTaxiById: async (req: Request, res: Response) => {
-        const { id } = req.params;
-        const taxiId = parseInt(id);
-        const getId = await prisma.taxis.findUnique({
-            where: {
-                id: taxiId
-            }
-        });
-        if (!getId) res.status(404).json({ message: 'El id del taxi no se encontro' });
-        else return res.status(200).json(getId);
+        try {
+            const { id } = req.params;
+            const taxiId = parseInt(id);
+            const getId = await prisma.taxis.findUnique({
+                where: {
+                    id: taxiId
+                }
+            });
+            if (!getId) res.status(404).json({ message: 'El id del taxi no se encontro' });
+            else return res.status(200).json(getId);
+        } catch (error:any) {
+            return res.status(500).json({ message: error.message })
+        }
     },
     postTaxi: async (req: Request, res: Response) => {
         try {
@@ -115,7 +119,7 @@ export const TaxisController = {
 
             return res.status(200).json(taxi);
 
-        } catch (error:any) {
+        } catch (error: any) {
             return res.status(500).json({ message: error.message })
         }
     },

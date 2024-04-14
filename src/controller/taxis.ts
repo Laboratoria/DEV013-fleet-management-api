@@ -97,4 +97,26 @@ export const TaxisController = {
             return res.status(500).json({ message: error.message })
         }
     },
+    putTaxiById: async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+            const taxiId = parseInt(id);
+            if (!Object.keys(req.body).length) {
+                return res.status(400).json({ message: 'El cuerpo de la solicitud está vacío.' })
+            }
+            const existingTaxi = await prisma.taxis.findUnique({ where: { id: taxiId } });
+            if (!existingTaxi) {
+                return res.status(404).json({ message: 'No se ha encontrado un taxi con este ID' });
+            }
+            const taxi = await prisma.taxis.update({
+                where: { id: taxiId },
+                data: req.body
+            });
+
+            return res.status(200).json(taxi);
+
+        } catch (error:any) {
+            return res.status(500).json({ message: error.message })
+        }
+    },
 }

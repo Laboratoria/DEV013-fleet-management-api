@@ -1,7 +1,7 @@
-import { Router } from 'express';
+import express,{ Router } from 'express';
 import { TaxisController } from '../controller/taxis';
 
-const router: Router = Router();
+const router: Router = express.Router();
 
 router.get('/taxis', TaxisController.getAllTaxis);
 router.get('/location',TaxisController.getLocationHistory);

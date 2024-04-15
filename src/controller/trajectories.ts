@@ -42,12 +42,22 @@ export const TrajectoriesController = {
         }
     },
     postTrajectories: async (req: Request, res: Response) => {
+        try {
+            const {id, latitude, longitude, taxi_id} = req.body;
 
+            const currentTime = new Date();
+            const newTrajectories =  await prisma.trajectories.create({
+                data:{
+                    id, latitude, longitude , taxiId: taxi_id, date:currentTime
+                }
+            });
+            return res.status(201).json(newTrajectories);
+        } catch (error:any) {
+            return res.status(500).json({ message: error.message })
+        }
     },
     putTrajectoryById: async (req: Request, res: Response) => {
-
     },
     deleteTrajectoriesById: async (req: Request, res: Response) => {
-
     },
 }

@@ -35,7 +35,7 @@ const router: Router = Router();
  *                  schema:
  *                      type: array
  *                      items:
- *                          $ref: '#/components/schemas/Taxi'
+ *                          $ref: '#/components/schemas/Taxis'
  */
 
 router.get('/taxis', TaxisController.getAllTaxis);
@@ -154,10 +154,22 @@ router.post('/taxis', TaxisController.postTaxi);
  *                $ref: '#/components/schemas/Taxis'
  *        '400':
  *          description: Solicitud incorrecta. Puede haber errores en los datos enviados.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
  *        '404':
  *          description: No se ha encontrado el taxi con el ID proporcionado.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
  *        '500':
  *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
  */
 
 router.put('/taxis/:id',TaxisController.putTaxiById);

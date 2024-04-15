@@ -76,8 +76,6 @@ router.get('/taxis', TaxisController.getAllTaxis);
  */
 
 router.get('/location', TaxisController.getLocationHistory);
-
-
 router.get('/lastLocation', TaxisController.getLastLocation)
 
 /**

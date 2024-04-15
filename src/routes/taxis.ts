@@ -35,7 +35,7 @@ const router: Router = Router();
  *                  schema:
  *                      type: array
  *                      items:
- *                          $ref: '#/components/schemas/Taxis'
+ *                          $ref: '#/components/schemas/Taxi'
  */
 
 router.get('/taxis', TaxisController.getAllTaxis);
@@ -121,7 +121,48 @@ router.get('/taxis/:id',TaxisController.getTaxiById);
  *          description: Taxi creado exitosamente.
  */
 router.post('/taxis', TaxisController.postTaxi);
+
+/**
+ * Put track
+ * @openapi
+ * /taxis/{id}:
+ *    put:
+ *      tags:
+ *        - Taxis
+ *      summary: "Actualizar un taxi existente"
+ *      description: "Este endpoint es para actualizar un taxi existente."
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: ID del taxi a actualizar
+ *          schema:
+ *            type: integer
+ *      requestBody:
+ *        description: Datos actualizados del taxi
+ *        required: false
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Taxis'
+ *      responses:
+ *        '200':
+ *          description: Operación exitosa. Devuelve el taxi actualizado.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Taxis'
+ *        '400':
+ *          description: Solicitud incorrecta. Puede haber errores en los datos enviados.
+ *        '404':
+ *          description: No se ha encontrado el taxi con el ID proporcionado.
+ *        '500':
+ *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ */
+
 router.put('/taxis/:id',TaxisController.putTaxiById);
+
+
 router.delete('/taxis/:id',TaxisController.deleteByTaxi)
 
 export default router;

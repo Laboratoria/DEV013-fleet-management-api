@@ -162,6 +162,30 @@ router.post('/taxis', TaxisController.postTaxi);
 
 router.put('/taxis/:id',TaxisController.putTaxiById);
 
+/**
+ * Delete track
+ * @openapi
+ * /taxis/{id}:
+ *    delete:
+ *      tags:
+ *        - Taxis
+ *      summary: "Eliminar un taxi existente por su ID"
+ *      description: "Este endpoint permite eliminar un taxi existente según su ID."
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: ID del taxi a eliminar
+ *          schema:
+ *            type: integer
+ *      responses:
+ *        '200':
+ *          description: Taxi eliminado correctamente.
+ *        '404':
+ *          description: No se ha encontrado un taxi con el ID proporcionado.
+ *        '500':
+ *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ */
 
 router.delete('/taxis/:id',TaxisController.deleteByTaxi)
 

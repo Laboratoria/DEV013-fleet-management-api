@@ -35,7 +35,7 @@ const router: Router = Router();
  *                  schema:
  *                      type: array
  *                      items:
- *                          $ref: '#/components/schemas/Taxis'
+ *                          $ref: '#/components/schemas/Taxi'
  */
 
 router.get('/taxis', TaxisController.getAllTaxis);

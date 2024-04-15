@@ -40,6 +40,7 @@ const router: Router = Router();
 
 router.get('/taxis', TaxisController.getAllTaxis);
 
+
 /**
  * Get track
  * @openapi
@@ -76,7 +77,29 @@ router.get('/taxis', TaxisController.getAllTaxis);
  */
 
 router.get('/location', TaxisController.getLocationHistory);
-router.get('/lastLocation', TaxisController.getLastLocation)
+
+/**
+ * Get track
+ * @openapi
+ * /lastLocation:
+ *    get:
+ *      tags:
+ *        - Taxis
+ *      summary: "Obtener la última ubicación de cada taxi"
+ *      description: Este endpoint es para obtener latitud, longitud y fecha de cada taxi 
+ *      responses:
+ *        '200':
+ *          description: Operación exitosa.
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: array
+ *                      items:
+ *                          $ref: '#/components/schemas/Taxis'
+ */
+router.get('/lastLocation', TaxisController.getLastLocation);
+
+router.get('/taxis/:id',TaxisController.getTaxiById);
 
 /**
  * Post Taxi
@@ -97,6 +120,8 @@ router.get('/lastLocation', TaxisController.getLastLocation)
  *        '201':
  *          description: Taxi creado exitosamente.
  */
-router.post('/taxis', TaxisController.postTaxi)
+router.post('/taxis', TaxisController.postTaxi);
+router.put('/taxis/:id',TaxisController.putTaxiById);
+router.delete('/taxis/:id',TaxisController.deleteByTaxi)
 
 export default router;

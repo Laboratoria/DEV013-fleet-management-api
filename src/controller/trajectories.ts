@@ -74,5 +74,17 @@ export const TrajectoriesController = {
         }
     },
     deleteTrajectoriesById: async (req: Request, res: Response) => {
+        try {
+            const {id} = req.params;
+            const existingTrajectories = await prisma.trajectories.findUnique({where:{id:parseInt(id)}});
+            if (!existingTrajectories) {
+                return res.status(404).json({ message: "La trayectoria no existe." });
+            } else {
+                await prisma.trajectories.delete({ where: { id: parseInt(id) } });
+                return res.status(200).json({ message: "Trayectoria eliminada correctamente." });
+            }
+        } catch (error) {
+            return res.status(500).json({message:'Error en el servidor'})
+        }
     },
 }

@@ -14,4 +14,19 @@ export const TrajectoriesController = {
             return res.status(500).json({ message: error.message })
         }
     },
+    getTrajectoriesCount: async(req: Request, res: Response) =>{
+
+    },
+    getTrajectoriesById :async(req:Request, res:Response) =>{
+
+    },
+    postTrajectories:async(req: Request, res: Response) =>{
+
+    },
+    putTrajectoryById: async (req: Request, res: Response)=>{
+
+    },
+    deleteTrajectoriesById : async(req: Request, res: Response) =>{
+
+    },
 }

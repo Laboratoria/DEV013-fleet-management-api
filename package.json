@@ -7,9 +7,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "nodemon",
+    "start": "npx tsc && node ./build/index.js",
+    "dev": "nodemon index.ts",
     "build": "tsc && cp ./src/*.js ./build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest taxis.spec.ts"
   },
   "repository": {
     "type": "git",

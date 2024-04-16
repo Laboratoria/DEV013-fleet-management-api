@@ -20,42 +20,31 @@ export const TaxisController = {
         }
     },
     // getLocationHistory
-    getLocationHistory: async (req: Request, res: Response) => {
-        try {
-            const { skip, take } = req.query;
-            const locationHistory = await prisma.taxis.findMany({
-                skip: skip ? Number(skip) : undefined,
-                take: take ? Number(take) : undefined,
-                where: {
-                    Trajectories: {
-                        some: {} // Verifica si hay al menos una trayectoria asociada
-                    }
-                },
-                include: {
-                    // taxis:{
-                    //     select:{
-                    //         id:true
-                    //     }
-                    // },
-                    // taxiId: true,
-                    // date: true,
-                    // latitude: true,
-                    // longitude: true,
-
-                    Trajectories: {
-                        select: {
-                            latitude: true,
-                            longitude: true,
-                            date: true
-                        }
-                    }
-                }
-            })
-            return res.status(200).json(locationHistory);
-        } catch (error: any) {
-            return res.status(500).json({ message: error.message })
-        }
-    },
+    // getLocationHistory: async (req: Request, res: Response) => {
+    //     try {
+    //         const { skip, take } = req.query;
+    //         const {taxiId, date} = req.body;
+    //         if(!Object.keys(req.body).length){
+    //             return  res.status(400).json({message:"Faltan parametros"});
+    //         }
+    //         const locationHistory = await prisma.trajectories.findMany({
+    //             skip: skip ? Number(skip) : undefined,
+    //             take: take ? Number(take) : undefined,
+    //             where: {
+    //                 taxiId:taxiId,
+    //                 date: date
+    //             },
+    //             select:{
+    //                 latitude: true,
+    //                 longitude:true,
+    //                 date:true
+    //             }
+    //         })
+    //         return res.status(200).json(locationHistory);
+    //     } catch (error: any) {
+    //         return res.status(500).json({ message: error.message })
+    //     }
+    // },
     getLastLocation: async (req: Request, res: Response) => {
         try {
             const lastLocation = await prisma.$queryRaw`

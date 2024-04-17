@@ -23,60 +23,85 @@ export const TrajectoriesController = {
                 }
             });
 
-            return  res.status(201).json(countTrajectories);
-        } catch (error:any) {
+            return res.status(201).json(countTrajectories);
+        } catch (error: any) {
             return res.status(500).json({ message: error.message })
         }
 
     },
+    getLocationHistory: async (req: Request, res: Response) => {
+        try {
+            const { date } = req.query;
+            const { id} = req.params;
+            const endDate = new Date(date as string);
+            endDate.setDate(endDate.getDate()+1);
+            const locationHistory = await prisma.trajectories.findMany({
+                where: {
+                    taxiId: parseInt(id), // Convertir a número si es necesario
+                    date: {
+                        gte: new Date(date as string),
+                        lt: endDate
+                    },
+                },
+                select: {
+                    latitude: true,
+                    longitude: true,
+                    date: true,
+                },
+            })
+            return res.status(200).json(locationHistory);
+        } catch (error: any) {
+            return res.status(500).json({ message: error.message })
+        }
+    },
     getTrajectoriesById: async (req: Request, res: Response) => {
         try {
             const { id } = req.params;
-            const trajectory = await prisma.trajectories.findUnique({ where: { id: parseInt(id) }});    
+            const trajectory = await prisma.trajectories.findUnique({ where: { id: parseInt(id) } });
             if (!trajectory) {
                 return res.status(404).json({ message: 'El id de la trayectoria no se encontro' });
-            }                        
+            }
             return res.status(200).json(trajectory);
-        } catch (error:any) {
+        } catch (error: any) {
             return res.status(500).json({ message: error.message })
         }
     },
     postTrajectories: async (req: Request, res: Response) => {
         try {
-            const {id, latitude, longitude, taxi_id} = req.body;
+            const { id, latitude, longitude, taxi_id } = req.body;
 
             const currentTime = new Date();
-            const newTrajectories =  await prisma.trajectories.create({
-                data:{
-                    id, latitude, longitude , taxiId: taxi_id, date:currentTime
+            const newTrajectories = await prisma.trajectories.create({
+                data: {
+                    id, latitude, longitude, taxiId: taxi_id, date: currentTime
                 }
             });
             return res.status(201).json(newTrajectories);
-        } catch (error:any) {
+        } catch (error: any) {
             return res.status(500).json({ message: error.message })
         }
     },
     putTrajectoryById: async (req: Request, res: Response) => {
         try {
-            const {id} = req.params;
-            if(!Object.keys(req.body).length){
-                return res.status(400).json({mesage:"El cuerpo de la solicitud está vacío"});  
+            const { id } = req.params;
+            if (!Object.keys(req.body).length) {
+                return res.status(400).json({ mesage: "El cuerpo de la solicitud está vacío" });
             }
-            const existingTrajectories = await prisma.trajectories.findUnique({where:{id:parseInt(id)}});
-            if(!existingTrajectories){
+            const existingTrajectories = await prisma.trajectories.findUnique({ where: { id: parseInt(id) } });
+            if (!existingTrajectories) {
                 return res.status(404).json({ message: 'No se ha encontrado una trayectoria con este ID' });
             }
-            const updateTrajectories = await prisma.trajectories.update({where:{id:parseInt(id)},data:req.body});
+            const updateTrajectories = await prisma.trajectories.update({ where: { id: parseInt(id) }, data: req.body });
             return res.status(200).json(updateTrajectories);
-        } catch (error:any) {
-            return res.status(500).json({message:'Error en el servidor'})
-            
+        } catch (error: any) {
+            return res.status(500).json({ message: 'Error en el servidor' })
+
         }
     },
     deleteTrajectoriesById: async (req: Request, res: Response) => {
         try {
-            const {id} = req.params;
-            const existingTrajectories = await prisma.trajectories.findUnique({where:{id:parseInt(id)}});
+            const { id } = req.params;
+            const existingTrajectories = await prisma.trajectories.findUnique({ where: { id: parseInt(id) } });
             if (!existingTrajectories) {
                 return res.status(404).json({ message: "La trayectoria no existe." });
             } else {
@@ -84,7 +109,7 @@ export const TrajectoriesController = {
                 return res.status(200).json({ message: "Trayectoria eliminada correctamente." });
             }
         } catch (error) {
-            return res.status(500).json({message:'Error en el servidor'})
+            return res.status(500).json({ message: 'Error en el servidor' })
         }
     },
 }

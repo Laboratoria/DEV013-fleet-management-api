@@ -1,21 +1,33 @@
-from flask import jsonify
-from .taxi_models import Taxi
-from . import create_app
+import os
+from flask import Flask, jsonify
+from flasgger import Swagger
+from models import db,Taxi
 
-app = create_app()
+app = Flask(__name__)
 
+# Obtener la URI de conexión a PostgreSQL desde las variables de entorno
+postgres_url = os.getenv('POSTGRES_URL')
+
+if not postgres_url:
+    raise ValueError("POSTGRES_URL not found in environment variables.")
+
+# Configurar la URI de conexión en la aplicación Flask
+app.config['SQLALCHEMY_DATABASE_URI'] = postgres_url
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
+# Configuración de Flasgger
+Swagger(app)
+
+# Ruta para listar todos los taxis
 @app.route('/taxis', methods=['GET'])
 def get_taxis():
-
+    
     taxis = Taxi.query.all()
-    taxis_list = []
     print(taxis)
-    # taxis_list = [{'id': taxi.id, 'plate': taxi.plate} for taxi in taxis]
-    for taxi in taxis:
-        taxis_list.append(taxi.toDict())
+    taxis_list = [{'id': taxi.id, 'plate': taxi.plate} for taxi in taxis]
     return jsonify(taxis_list)
 
 if __name__ == "__main__":
-    with app.app_context():
-        app.run(debug=True)
-    
+    app.run(debug=True)

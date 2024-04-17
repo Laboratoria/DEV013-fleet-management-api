@@ -28,32 +28,6 @@ exports.TrajectoriesController = {
             return res.status(500).json({ message: error.message });
         }
     }),
-    getLocationHistory: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const { skip, take } = req.query;
-            const { taxiId, date } = req.body;
-            if (!Object.keys(req.body).length) {
-                return res.status(400).json({ message: "Faltan parametros" });
-            }
-            const locationHistory = yield db_1.default.trajectories.findMany({
-                skip: skip ? Number(skip) : undefined,
-                take: take ? Number(take) : undefined,
-                where: {
-                    taxiId: taxiId,
-                    date: date
-                },
-                select: {
-                    latitude: true,
-                    longitude: true,
-                    date: true
-                }
-            });
-            return res.status(200).json(locationHistory);
-        }
-        catch (error) {
-            return res.status(500).json({ message: error.message });
-        }
-    }),
     getTrajectoriesCount: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const countTrajectories = yield db_1.default.trajectories.groupBy({

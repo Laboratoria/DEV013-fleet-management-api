@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const taxis_1 = require("../controller/taxis");
 const router = express_1.default.Router();
 router.get('/taxis', taxis_1.TaxisController.getAllTaxis);
-// router.get('/location',TaxisController.getLocationHistory);
+router.get('/location', taxis_1.TaxisController.getLocationHistory);
 router.get('/lastLocation', taxis_1.TaxisController.getLastLocation);
 router.get('/taxis/:id', taxis_1.TaxisController.getTaxiById);
 router.post('/taxis', taxis_1.TaxisController.postTaxi);

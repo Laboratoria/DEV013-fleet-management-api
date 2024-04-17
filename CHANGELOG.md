@@ -1,19 +1,20 @@
 ## 1.0.0 - 4.0.2024
 
 ### Learnings
-- ok
+- Virtual environments
+- Vercel postgresSQL
+- Tables SQL
+- PGadmin
+- Environment variables
+
 
 ### Added
-- ok
-
-### Changed
--
-
-### Fixed
--
-
-### Removed
--
+- SRC
+- Virtual environment (flask, psychopg2, vercel)
+- .env
+- Conection postgres
+- Changelog
+- main.py
 
 ---
 

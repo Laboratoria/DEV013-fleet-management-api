@@ -19,5 +19,5 @@ model Trajectories {
   date      DateTime? @db.Timestamp(6)
   latitude  Float?
   longitude Float?
-  Taxis     Taxis?    @relation(fields: [taxiId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_taxis")
+  Taxis     Taxis     @relation(fields: [taxiId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_taxis")
 }

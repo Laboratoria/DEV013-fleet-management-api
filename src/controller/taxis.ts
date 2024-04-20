@@ -10,6 +10,9 @@ export const TaxisController = {
     getAllTaxis: async (req: Request, res: Response) => {
         try {
             const { skip, take } = req.query;
+            if(!skip || ! take){
+                return res.status(400).json({ message: "Los parámetros 'skip' y 'take' son obligatorios en la consulta." });
+            }
             const allTaxis = await prisma.taxis.findMany({
                 skip: skip ? Number(skip) : undefined,
                 take: take ? Number(take) : undefined
@@ -52,23 +55,6 @@ export const TaxisController = {
                 }
             })
             return res.status(200).json(locationHistory);
-        } catch (error: any) {
-            return res.status(500).json({ message: error.message })
-        }
-    },
-    getLastLocation: async (req: Request, res: Response) => {
-        try {
-            const lastLocation = await prisma.$queryRaw`
-            SELECT tax.id, tra.date, tra.latitude, tra.longitude
-            FROM "Taxis" tax
-            INNER JOIN (
-              SELECT taxi_id, date, latitude, longitude,
-                     ROW_NUMBER() OVER (PARTITION BY taxi_id ORDER BY date DESC) AS row_num
-              FROM "Trajectories"
-            ) AS tra ON tax.id = tra.taxi_id AND tra.row_num = 1;
-          `;
-            return res.status(200).json(lastLocation);
-
         } catch (error: any) {
             return res.status(500).json({ message: error.message })
         }

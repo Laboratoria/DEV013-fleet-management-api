@@ -1,10 +1,10 @@
 
 import request from 'supertest';
-import router from '../routes/taxis';
+import app from '../index';
 
 describe('GET /taxis', () => {
   it('should respond with JSON array of taxis', async () => {
-    const response = await request(router).get('/taxis');
+    const response = await request(app).get('/taxis');
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBe(true); // Verifica que el cuerpo de la respuesta sea un array
 

@@ -21,6 +21,9 @@ exports.TaxisController = {
     getAllTaxis: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const { skip, take } = req.query;
+            if (!skip || !take) {
+                return res.status(400).json({ message: "Los parámetros 'skip' y 'take' son obligatorios en la consulta." });
+            }
             const allTaxis = yield db_1.default.taxis.findMany({
                 skip: skip ? Number(skip) : undefined,
                 take: take ? Number(take) : undefined
@@ -32,42 +35,31 @@ exports.TaxisController = {
         }
     }),
     // getLocationHistory
-    getLocationHistory: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const { skip, take } = req.query;
-            const locationHistory = yield db_1.default.taxis.findMany({
-                skip: skip ? Number(skip) : undefined,
-                take: take ? Number(take) : undefined,
-                where: {
-                    Trajectories: {
-                        some: {} // Verifica si hay al menos una trayectoria asociada
-                    }
-                },
-                include: {
-                    // taxis:{
-                    //     select:{
-                    //         id:true
-                    //     }
-                    // },
-                    // taxiId: true,
-                    // date: true,
-                    // latitude: true,
-                    // longitude: true,
-                    Trajectories: {
-                        select: {
-                            latitude: true,
-                            longitude: true,
-                            date: true
-                        }
-                    }
-                }
-            });
-            return res.status(200).json(locationHistory);
-        }
-        catch (error) {
-            return res.status(500).json({ message: error.message });
-        }
-    }),
+    // getLocationHistory: async (req: Request, res: Response) => {
+    //     try {
+    //         const { skip, take } = req.query;
+    //         const {taxiId, date} = req.body;
+    //         if(!Object.keys(req.body).length){
+    //             return  res.status(400).json({message:"Faltan parametros"});
+    //         }
+    //         const locationHistory = await prisma.trajectories.findMany({
+    //             skip: skip ? Number(skip) : undefined,
+    //             take: take ? Number(take) : undefined,
+    //             where: {
+    //                 taxiId:taxiId,
+    //                 date: date
+    //             },
+    //             select:{
+    //                 latitude: true,
+    //                 longitude:true,
+    //                 date:true
+    //             }
+    //         })
+    //         return res.status(200).json(locationHistory);
+    //     } catch (error: any) {
+    //         return res.status(500).json({ message: error.message })
+    //     }
+    // },
     getLastLocation: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const lastLocation = yield db_1.default.$queryRaw `

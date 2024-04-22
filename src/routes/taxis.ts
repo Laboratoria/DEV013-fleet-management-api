@@ -78,26 +78,7 @@ router.get('/taxis', TaxisController.getAllTaxis);
 
 router.get('/location', TaxisController.getLocationHistory);
 
-/**
- * Get track
- * @openapi
- * /lastLocation:
- *    get:
- *      tags:
- *        - Taxis
- *      summary: "Obtener la última ubicación de cada taxi"
- *      description: Este endpoint es para obtener latitud, longitud y fecha de cada taxi 
- *      responses:
- *        '200':
- *          description: Operación exitosa.
- *          content:
- *              application/json:
- *                  schema:
- *                      type: array
- *                      items:
- *                          $ref: '#/components/schemas/Taxis'
- */
-router.get('/lastLocation', TaxisController.getLastLocation);
+
 
 router.get('/taxis/:id',TaxisController.getTaxiById);
 

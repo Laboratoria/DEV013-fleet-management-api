@@ -30,13 +30,25 @@ exports.TrajectoriesController = {
     }),
     getTrajectoriesCount: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const countTrajectories = yield db_1.default.trajectories.groupBy({
-                by: ['taxiId'],
-                _count: {
-                    taxiId: true,
-                }
+            const { date } = req.query;
+            const { id } = req.params;
+            const endDate = new Date(date);
+            endDate.setDate(endDate.getDate() + 1);
+            const locationHistory = yield db_1.default.trajectories.findMany({
+                where: {
+                    taxiId: parseInt(id), // Convertir a número si es necesario
+                    date: {
+                        gte: new Date(date),
+                        lt: endDate
+                    },
+                },
+                select: {
+                    latitude: true,
+                    longitude: true,
+                    date: true,
+                },
             });
-            return res.status(201).json(countTrajectories);
+            return res.status(200).json(locationHistory);
         }
         catch (error) {
             return res.status(500).json({ message: error.message });
@@ -50,6 +62,23 @@ exports.TrajectoriesController = {
                 return res.status(404).json({ message: 'El id de la trayectoria no se encontro' });
             }
             return res.status(200).json(trajectory);
+        }
+        catch (error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }),
+    getLastLocation: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const lastLocation = yield db_1.default.$queryRaw `
+            SELECT tax.id, tra.date, tra.latitude, tra.longitude
+            FROM "Taxis" tax
+            INNER JOIN (
+              SELECT taxi_id, date, latitude, longitude,
+                     ROW_NUMBER() OVER (PARTITION BY taxi_id ORDER BY date DESC) AS row_num
+              FROM "Trajectories"
+            ) AS tra ON tax.id = tra.taxi_id AND tra.row_num = 1;
+          `;
+            return res.status(200).json(lastLocation);
         }
         catch (error) {
             return res.status(500).json({ message: error.message });

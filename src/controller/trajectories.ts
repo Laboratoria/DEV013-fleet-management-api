@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "../db";
+const xl = require('excel4node');
 
 export const TrajectoriesController = {
     getAllTrajectories: async (req: Request, res: Response) => {
@@ -32,9 +33,9 @@ export const TrajectoriesController = {
     getLocationHistory: async (req: Request, res: Response) => {
         try {
             const { date } = req.query;
-            const { id} = req.params;
+            const { id } = req.params;
             const endDate = new Date(date as string);
-            endDate.setDate(endDate.getDate()+1);
+            endDate.setDate(endDate.getDate() + 1);
             const locationHistory = await prisma.trajectories.findMany({
                 where: {
                     taxiId: parseInt(id), // Convertir a número si es necesario
@@ -125,8 +126,80 @@ export const TrajectoriesController = {
                 await prisma.trajectories.delete({ where: { id: parseInt(id) } });
                 return res.status(200).json({ message: "Trayectoria eliminada correctamente." });
             }
-        } catch (error) {
+        } catch (error: any) {
             return res.status(500).json({ message: 'Error en el servidor' })
         }
     },
+
+    getExportExcel: async (req: Request, res: Response) => {
+        try {
+            const { taxiId, date } = req.query;
+            const endDate = new Date(date as string);
+            endDate.setDate(endDate.getDate() + 1);
+            const findPlate = await prisma.taxis.findFirst({
+                where: {
+                    plate: taxiId as string,
+                },
+                select: {
+                    id: true,
+                }
+            });
+            console.log("🚀 ~ getExportExcel:async ~ findPlate:", findPlate)
+            const taxi = findPlate?.id
+            const location = await prisma.trajectories.findMany({
+                where: {
+                    taxiId: taxi,
+                    date: {
+                        gte: new Date(date as string),
+                        lt: endDate,
+                    },
+                },
+            });
+            // console.log("🚀 ~ getExportExcel:async ~ location:", location)
+            // return res.status(200).json(location);
+            const workbook = new xl.Workbook();
+            const nameFile = "vehicle location " + taxiId;
+            const excelLocation = workbook.addWorksheet(nameFile);
+
+            const style = workbook.createStyle({
+                font: {
+                    name: 'Arial',
+                    color: '#000000',
+                    size: 12
+                },
+                fill: {
+                    type: 'pattern',
+                    patternType: 'solid',
+                    fgColor: '#A9D08E',
+                },
+                border: { 
+                    left: { style: 'thin', color: 'black' },
+                    right: { style: 'thin', color: 'black' },
+                    top: { style: 'thin', color: 'black' },
+                    bottom: { style: 'thin', color: 'black' },
+                },
+            });
+
+            excelLocation.cell(1, 1).string('Trajectories_id').style(style);
+            excelLocation.cell(1, 2).string('Taxi_Id').style(style);
+            excelLocation.cell(1, 3).string('Date').style(style);
+            excelLocation.cell(1, 4).string('Latitude').style(style);
+            excelLocation.cell(1, 5).string('Longitude').style(style);
+            location.forEach((l, index) => {
+                excelLocation.cell(index + 2, 1).number(l.id);
+                excelLocation.cell(index + 2, 2).number(l.taxiId);
+                excelLocation.cell(index + 2, 3).date(l.date);
+                excelLocation.cell(index + 2, 4).number(l.latitude);
+                excelLocation.cell(index + 2, 5).number(l.longitude);
+            });
+
+            const buffer = await workbook.writeToBuffer();
+
+            res.setHeader('Content-Type', 'application/vnd.ms-excel');
+            res.setHeader('Content-Disposition', `attachment; filename=${nameFile}.xlsx`);
+            res.send(buffer);
+        } catch (error: any) {
+            return res.status(500).json({ message: 'Error en el servidor' })
+        }
+    }
 }

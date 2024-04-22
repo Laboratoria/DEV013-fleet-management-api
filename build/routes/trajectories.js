@@ -9,6 +9,7 @@ const router = express_1.default.Router();
 router.get('/trajectories', trajectories_1.TrajectoriesController.getAllTrajectories);
 router.get('/count', trajectories_1.TrajectoriesController.getTrajectoriesCount);
 router.get('/trajectories/:id', trajectories_1.TrajectoriesController.getTrajectoriesById);
+router.get('/location/:id', trajectories_1.TrajectoriesController.getLocationHistory);
 router.post('/trajectories', trajectories_1.TrajectoriesController.postTrajectories);
 router.put('/trajectories/:id', trajectories_1.TrajectoriesController.putTrajectoryById);
 router.delete('/trajectories/:id', trajectories_1.TrajectoriesController.deleteTrajectoriesById);

@@ -10,7 +10,7 @@
     "start": "npx tsc && node ./build/index.js",
     "dev": "nodemon index.ts",
     "build": "tsc && cp ./src/*.js ./build",
-    "test": "jest taxis.spec.ts"
+    "test": "jest --watchAll taxis.spec.ts"
   },
   "repository": {
     "type": "git",

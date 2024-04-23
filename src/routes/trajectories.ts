@@ -64,12 +64,55 @@ router.get('/trajectories', TrajectoriesController.getAllTrajectories);
  *                    $ref: '#/components/schemas/Error'
  */
 router.get('/count', TrajectoriesController.getTrajectoriesCount);
+/**
+ * Get track
+ * @openapi
+ * /trajectories/{id}:
+ *    get:
+ *      tags:
+ *        - Trajectories
+ *      summary: "Buscar trayectoria por Id"
+ *      description: "Este endpoint es para buscar trayectoria por Id."
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: ID de la trayectoria a actualizar
+ *          schema:
+ *            type: integer
+ *      responses:
+ *        '200':
+ *          description: Operación exitosa. Devuelve el trayectoria buscado.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Trajectories'
+ *        '400':
+ *          description: Solicitud incorrecta. Puede haber errores en los datos enviados.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ *        '404':
+ *          description: No se ha encontrado el taxi con el ID proporcionado.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ *        '500':
+ *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ */
 router.get('/trajectories/:id', TrajectoriesController.getTrajectoriesById);
+
+
 router.get('/location/:id', TrajectoriesController.getLocationHistory)
 router.post('/trajectories', TrajectoriesController.postTrajectories);
 router.put('/trajectories/:id', TrajectoriesController.putTrajectoryById);
 router.delete('/trajectories/:id', TrajectoriesController.deleteTrajectoriesById);
-router.get('/exportExcel', TrajectoriesController.getExportExcel)
-// 以下は管理者用
+router.get('/exportExcel', TrajectoriesController.getExportExcel);
 
 export default router;

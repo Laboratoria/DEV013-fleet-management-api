@@ -108,8 +108,64 @@ router.get('/count', TrajectoriesController.getTrajectoriesCount);
  */
 router.get('/trajectories/:id', TrajectoriesController.getTrajectoriesById);
 
+/**
+ * Trajectories
+ * @openapi
+ * /location/{id}:
+ *   get:
+ *     tags:
+ *       - Location
+ *     summary: "Obtener historial de ubicaciones por ID de taxi y fecha"
+ *     description: "Este endpoint obtiene el historial de ubicaciones de un taxi para una fecha específica."
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: "ID del taxi para el cual se desea obtener el historial de ubicaciones."
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: date
+ *         required: true
+ *         description: "Fecha para la cual se desea obtener el historial de ubicaciones del taxi."
+ *         schema:
+ *           type: string
+ *           format: date
+ *     responses:
+ *       '200':
+ *         description: "Operación exitosa. Devuelve el historial de ubicaciones del taxi para la fecha especificada."
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   latitude:
+ *                     type: number
+ *                     description: "Latitud de la ubicación."
+ *                   longitude:
+ *                     type: number
+ *                     description: "Longitud de la ubicación."
+ *                   date:
+ *                     type: string
+ *                     format: date-time
+ *                     description: "Fecha y hora de la ubicación."
+ *       '400':
+ *         description: "Solicitud incorrecta. Puede haber errores en los datos enviados."
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       '500':
+ *         description: "Error interno del servidor. Hubo un problema al procesar la solicitud."
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/location/:id', TrajectoriesController.getLocationHistory);
 
-router.get('/location/:id', TrajectoriesController.getLocationHistory)
 router.post('/trajectories', TrajectoriesController.postTrajectories);
 router.put('/trajectories/:id', TrajectoriesController.putTrajectoryById);
 router.delete('/trajectories/:id', TrajectoriesController.deleteTrajectoriesById);

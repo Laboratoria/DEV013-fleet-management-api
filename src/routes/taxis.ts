@@ -109,7 +109,48 @@ router.get('/taxis', TaxisController.getAllTaxis);
 router.get('/location', TaxisController.getLocationHistory);
 
 
-
+/**
+ * Get track
+ * @openapi
+ * /taxis/{id}:
+ *    get:
+ *      tags:
+ *        - Taxis
+ *      summary: "Buscar taxi por Id"
+ *      description: "Este endpoint es para buscar taxi por Id."
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: ID del taxi a buscar
+ *          schema:
+ *            type: integer
+ *      responses:
+ *        '200':
+ *          description: Operación exitosa. Devuelve el taxi buscado.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Taxis'
+ *        '400':
+ *          description: Solicitud incorrecta. Puede haber errores en los datos enviados.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ *        '404':
+ *          description: No se ha encontrado el taxi con el ID proporcionado.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ *        '500':
+ *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ */
 router.get('/taxis/:id',TaxisController.getTaxiById);
 
 /**

@@ -19,9 +19,7 @@ export const TrajectoriesController = {
         try {
             const countTrajectories = await prisma.trajectories.groupBy({
                 by: ['taxiId'],
-                _count: {
-                    taxiId: true,
-                }
+                _count: true,
             });
 
             return res.status(201).json(countTrajectories);

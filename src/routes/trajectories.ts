@@ -212,6 +212,31 @@ router.get("/location/:id", TrajectoriesController.getLocationHistory);
  */
 router.post("/trajectories", TrajectoriesController.postTrajectories);
 // router.put("/trajectories/:id", TrajectoriesController.putTrajectoryById);
+
+/**
+ * Delete track
+ * @openapi
+ * /trajectories/{id}:
+ *    delete:
+ *      tags:
+ *        - Trajectories
+ *      summary: "Eliminar una trayectoria existente por su ID"
+ *      description: "Este endpoint permite eliminar una trayectoria existente según su ID."
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: ID del trayectoria a eliminar
+ *          schema:
+ *            type: integer
+ *      responses:
+ *        '200':
+ *          description: Trayectoria eliminado correctamente.
+ *        '404':
+ *          description: No se ha encontrado un trayectoria con el ID proporcionado.
+ *        '500':
+ *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ */
 router.delete(
   "/trajectories/:id",
   TrajectoriesController.deleteTrajectoriesById

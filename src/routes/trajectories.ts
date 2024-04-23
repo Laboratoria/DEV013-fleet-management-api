@@ -51,11 +51,20 @@ router.get('/trajectories', TrajectoriesController.getAllTrajectories);
  *      description: Este endpoint es para obtener cuantas trayectorias hay por taxi
  *      responses:
  *        '200':
- *          description: Operación exitosa.
+ *          description: Operación exitosa.Devuelve el recuento de trayectorias para cada taxi.
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/Trajectories'
+ *                      type: object
+ *                      properties:
+ *                          taxiId:
+ *                              type: integer
+ *                              description: "Id del taxi"
+ *                              default: 10133
+ *                          count:
+ *                              type: integer
+ *                              description: "Número de trayectorias que tiene un taxi"
+ *                              default: 1138
  *        '500':
  *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
  *          content:
@@ -109,12 +118,12 @@ router.get('/count', TrajectoriesController.getTrajectoriesCount);
 router.get('/trajectories/:id', TrajectoriesController.getTrajectoriesById);
 
 /**
- * Trajectories
+ * Get Track
  * @openapi
  * /location/{id}:
  *   get:
  *     tags:
- *       - Location
+ *       - Trajectories
  *     summary: "Obtener historial de ubicaciones por ID de taxi y fecha"
  *     description: "Este endpoint obtiene el historial de ubicaciones de un taxi para una fecha específica."
  *     parameters:

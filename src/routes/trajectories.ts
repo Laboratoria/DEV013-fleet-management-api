@@ -1,5 +1,5 @@
-import express, { Router } from 'express';
-import { TrajectoriesController } from '../controller/trajectories';
+import express, { Router } from "express";
+import { TrajectoriesController } from "../controller/trajectories";
 
 const router: Router = express.Router();
 
@@ -38,7 +38,7 @@ const router: Router = express.Router();
  *                          $ref: '#/components/schemas/Trajectories'
  */
 
-router.get('/trajectories', TrajectoriesController.getAllTrajectories);
+router.get("/trajectories", TrajectoriesController.getAllTrajectories);
 
 /**
  * Get track
@@ -72,7 +72,7 @@ router.get('/trajectories', TrajectoriesController.getAllTrajectories);
  *                 schema:
  *                    $ref: '#/components/schemas/Error'
  */
-router.get('/count', TrajectoriesController.getTrajectoriesCount);
+router.get("/count", TrajectoriesController.getTrajectoriesCount);
 /**
  * Get track
  * @openapi
@@ -115,7 +115,7 @@ router.get('/count', TrajectoriesController.getTrajectoriesCount);
  *                 schema:
  *                    $ref: '#/components/schemas/Error'
  */
-router.get('/trajectories/:id', TrajectoriesController.getTrajectoriesById);
+router.get("/trajectories/:id", TrajectoriesController.getTrajectoriesById);
 
 /**
  * Get Track
@@ -173,11 +173,49 @@ router.get('/trajectories/:id', TrajectoriesController.getTrajectoriesById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/location/:id', TrajectoriesController.getLocationHistory);
+router.get("/location/:id", TrajectoriesController.getLocationHistory);
 
-router.post('/trajectories', TrajectoriesController.postTrajectories);
-router.put('/trajectories/:id', TrajectoriesController.putTrajectoryById);
-router.delete('/trajectories/:id', TrajectoriesController.deleteTrajectoriesById);
-router.get('/exportExcel', TrajectoriesController.getExportExcel);
+/**
+ * Post Trajectories
+ * @openapi
+ * /trajectories:
+ *    post:
+ *      tags:
+ *        - Trajectories
+ *      summary: "Crear nueva trayectoria"
+ *      description: Este endpoint permite agregar una nueva trayectoria manualmente.
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *               $ref: '#/components/schemas/Trajectories'
+ *      responses:
+ *        '201':
+ *          description: Operación exitosa. Devuelve la nueva trayectoria creada.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Trajectories'
+ *        '400':
+ *          description: Solicitud incorrecta. Puede haber errores en los datos enviados.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ *        '500':
+ *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ */
+router.post("/trajectories", TrajectoriesController.postTrajectories);
+// router.put("/trajectories/:id", TrajectoriesController.putTrajectoryById);
+router.delete(
+  "/trajectories/:id",
+  TrajectoriesController.deleteTrajectoriesById
+);
+router.get("/exportExcel", TrajectoriesController.getExportExcel);
 
 export default router;

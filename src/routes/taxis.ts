@@ -66,14 +66,44 @@ router.get('/taxis', TaxisController.getAllTaxis);
  *            default: 10
  *          description: Número máximo de resultados por página
  *      responses:
- *        '200':
- *          description: Operación exitosa.
+  *        '200':
+ *          description: Operación exitosa. Devuelve el historial de ubicaciones de los taxis.
  *          content:
- *              application/json:
- *                  schema:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  type: object
+ *                  properties:
+ *                    id:
+ *                      type: integer
+ *                      description: "Id del taxi"
+ *                      default: 6598
+ *                    plate:
+ *                      type: string 
+ *                      description: "Placa del taxi"
+ *                      default: "FHLB-7962"
+ *                    Trajectories:
  *                      type: array
  *                      items:
- *                          $ref: '#/components/schemas/Taxis'
+ *                        type: object
+ *                        properties:
+ *                          latitude:
+ *                            type: number
+ *                            description: "Latitud de la ubicación"
+ *                          longitude:
+ *                            type: number
+ *                            description: "Longitud de la ubicación"
+ *                          date:
+ *                            type: string
+ *                            format: date-time
+ *                            description: "Fecha y hora de la ubicación"
+ *        '500':
+ *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
  */
 
 router.get('/location', TaxisController.getLocationHistory);

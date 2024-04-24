@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
-import prisma from "../db";
+import { AllTaxisService, TaxiByIdService } from "../services/taxis";
+// import prisma from "../utils/db";
 
 
 // getTaxis
@@ -11,51 +12,16 @@ export const TaxisController = {
             if (!skip || !take) {
                 return res.status(400).json({ message: "Los parámetros 'skip' y 'take' son obligatorios en la consulta." });
             }
-            const allTaxis = await prisma.taxis.findMany({
-                skip: skip ? Number(skip) : undefined,
-                take: take ? Number(take) : undefined
-            });
-            return res.status(200).json(allTaxis);
+            const taxis = await AllTaxisService(Number(skip),Number(take))
+            return res.status(200).json(taxis);
         } catch (error: any) {
             return res.status(500).json({ message: 'Error en el servidor' })
-        }
-    },
-    // getLocationHistory
-    getLocationHistory: async (req: Request, res: Response) => {
-        try {
-            const { skip, take } = req.query;
-            const locationHistory = await prisma.taxis.findMany({
-                skip: skip ? Number(skip) : undefined,
-                take: take ? Number(take) : undefined,
-                where: {
-                    Trajectories: {
-                        some: {} // Verifica si hay al menos una trayectoria asociada
-                    }
-                },
-                include: {
-                    Trajectories: {
-                        select: {
-                            latitude: true,
-                            longitude: true,
-                            date: true
-                        }
-                    }
-                }
-            })
-            return res.status(200).json(locationHistory);
-        } catch (error: any) {
-            return res.status(500).json({ message: 'Error en el servidor' });
         }
     },
     getTaxiById: async (req: Request, res: Response) => {
         try {
             const { id } = req.params;
-            const taxiId = parseInt(id);
-            const getId = await prisma.taxis.findUnique({
-                where: {
-                    id: taxiId
-                }
-            });
+            const getId = await TaxiByIdService(id)
             if (!getId) res.status(404).json({ message: 'El id del taxi no se encontro' });
             else return res.status(200).json(getId);
         } catch (error: any) {

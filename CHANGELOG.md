@@ -1,4 +1,27 @@
-## 1.0.0 - 4.0.2024
+## 1.1.0 - 4.24.2024
+
+### Learnings
+- Relational data bases
+- REST APIs
+- Post man
+- Pagination
+- Cursor and offset methods
+- SQL petitions
+- Flask parameters
+
+### Added
+- First endpoint
+
+### Changed
+- Boilerplate and some names of files
+
+### Fixed
+- Virtual environment
+
+### Removed
+-
+
+## 1.0.0 - 4.17.2024
 
 ### Learnings
 - Virtual environments
@@ -6,7 +29,6 @@
 - Tables SQL
 - PGadmin
 - Environment variables
-
 
 ### Added
 - SRC

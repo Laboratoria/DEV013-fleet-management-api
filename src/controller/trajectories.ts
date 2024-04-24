@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "../db";
 const xl = require('excel4node');
+const nodemailer = require('nodemailer');
 
 export const TrajectoriesController = {
     getAllTrajectories: async (req: Request, res: Response) => {
@@ -33,7 +34,9 @@ export const TrajectoriesController = {
             const { date } = req.query;
             const { id } = req.params;
             const endDate = new Date(date as string);
+            
             endDate.setDate(endDate.getDate() + 1);
+            console.log("🚀 ~ getLocationHistory: ~ endDate:", endDate)
             const locationHistory = await prisma.trajectories.findMany({
                 where: {
                     taxiId: parseInt(id), // Convertir a número si es necesario
@@ -170,7 +173,7 @@ export const TrajectoriesController = {
                     patternType: 'solid',
                     fgColor: '#A9D08E',
                 },
-                border: { 
+                border: {
                     left: { style: 'thin', color: 'black' },
                     right: { style: 'thin', color: 'black' },
                     top: { style: 'thin', color: 'black' },
@@ -193,9 +196,30 @@ export const TrajectoriesController = {
 
             const buffer = await workbook.writeToBuffer();
 
-            res.setHeader('Content-Type', 'application/vnd.ms-excel');
-            res.setHeader('Content-Disposition', `attachment; filename=${nameFile}.xlsx`);
-            res.send(buffer);
+            // res.setHeader('Content-Type', 'application/vnd.ms-excel');
+            // res.setHeader('Content-Disposition', `attachment; filename=${nameFile}.xlsx`);
+            // res.send(buffer);
+
+            const transporter = nodemailer.createTransport({
+                host:'smtp.gmail.com',
+                port:587,
+                auth: {
+                    user: process.env.MAIL_USER,
+                    pass: process.env.PASSWORD,
+                }
+            });
+            const emailOptions = {
+                from: `Aylin SCV< ${process.env.MAIL_USER} >`,
+                to: process.env.TO_USER, 
+                subject: nameFile, 
+                text: "Attached you will find the file of locations in Excel format.",
+                attachments: [{
+                    filename: `${nameFile}.xlsx`,
+                    content: buffer,
+                }],
+            };
+            await transporter.sendMail(emailOptions);
+            res.status(200).json({message:'Correo electrónico enviado con éxito'});
         } catch (error: any) {
             return res.status(500).json({ message: 'Error en el servidor' })
         }

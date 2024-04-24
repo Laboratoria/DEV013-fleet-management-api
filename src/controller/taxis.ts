@@ -1,8 +1,6 @@
-// import { PrismaClient } from "@prisma/client";
 import type { Request, Response } from "express";
 import prisma from "../db";
 
-// const taxisClient = new PrismaClient().taxis;
 
 // getTaxis
 export const TaxisController = {
@@ -35,16 +33,6 @@ export const TaxisController = {
                     }
                 },
                 include: {
-                    // taxis:{
-                    //     select:{
-                    //         id:true
-                    //     }
-                    // },
-                    // taxiId: true,
-                    // date: true,
-                    // latitude: true,
-                    // longitude: true,
-
                     Trajectories: {
                         select: {
                             latitude: true,

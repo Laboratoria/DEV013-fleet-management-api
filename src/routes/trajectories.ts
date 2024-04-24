@@ -213,6 +213,8 @@ router.get("/location/:id", TrajectoriesController.getLocationHistory);
 router.post("/trajectories", TrajectoriesController.postTrajectories);
 // router.put("/trajectories/:id", TrajectoriesController.putTrajectoryById);
 
+
+router.get("/lastLocation", TrajectoriesController.getLastLocation);
 /**
  * Delete track
  * @openapi

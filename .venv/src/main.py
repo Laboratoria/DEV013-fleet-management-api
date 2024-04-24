@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request
-#request servirá para configurar los parámetros
 from flask_sqlalchemy import SQLAlchemy
 from flasgger import Swagger
 
@@ -17,17 +16,32 @@ class Taxi(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     plate = db.Column(db.String(20), nullable=False)
 
-@app.route("/")
-def root():
-   return "This is root"
-
 # Route to show all taxis
-@app.route('/taxis', methods =['GET'])
+@app.route('/taxis', methods=['GET'])
 def show_taxis():
     """
     Endpoint to get all taxis.
 
     ---
+    parameters:
+      - name: query
+        in: query
+        type: string
+        required: false
+        description: Plate of the taxi.
+
+      - name: page
+        in: query
+        type: integer
+        required: false
+        description: Page number of the results to retrieve. Default is 1.
+
+      - name: limit
+        in: query
+        type: integer
+        required: false
+        description: Number of elements per page. Default is 10.
+
     responses:
       200 :
         description: A JSON array of all taxis.
@@ -43,13 +57,29 @@ def show_taxis():
                 type: string
                 description: Plate of the taxi.
     """
-    taxis = Taxi.query.all()
-    return jsonify([{'id': taxi.id, 'plate': taxi.plate} for taxi in taxis])
 
+    # Obtener parámetros de paginación de la solicitud
+    limit = request.args.get("limit", default=10, type=int)
+    page = request.args.get("page", default=1, type=int)
+
+    # Calcular el índice de inicio basado en la página y el límite
+    start_index = (page - 1) * limit
+
+    # Consultar la base de datos con el límite y el índice de inicio
+    taxis = Taxi.query.offset(start_index).limit(limit).all()
+
+    # Crear una lista de taxis
+    taxis_list = [{'id': taxi.id, 'plate': taxi.plate} for taxi in taxis]
+
+    # Crear un diccionario para la respuesta
+    response = {
+        'taxis': taxis_list
+    }
+
+    return jsonify(response)
 
 if __name__ == "__main__":
     app.run(debug=True)
 
-
-
+#
 

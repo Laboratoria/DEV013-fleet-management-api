@@ -35,11 +35,6 @@ export const createTaxiService = async (id: number, plate: string): Promise<any>
             throw new Error("El ID del taxi debe ser un número positivo");
         }
 
-        const regexPlate = /^[A-Z]{3}-\d{4}$/gm; 
-        if(!regexPlate.test(plate)){
-            throw new Error('El formato de la placa es incorrecto');
-        }
-
         const newTaxi = await prisma.taxis.create({
             data: {
                 id, plate

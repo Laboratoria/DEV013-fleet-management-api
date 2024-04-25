@@ -34,6 +34,10 @@ export const TaxisController = {
             if(!id  || !plate){
                 return  res.status(400).json({message:'No se enviaron los campos necesarios'});
             }
+            const existingTaxi = await taxiByIdService(id);
+            if(existingTaxi){
+                return  res.status(403).json({message:'El taxi ya existe'})
+            }
             const newTaxi = await createTaxiService(id,plate)
             return res.status(201).json(newTaxi);
         } catch (error: any) {

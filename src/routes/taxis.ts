@@ -251,6 +251,7 @@ router.put('/taxis/:id',TaxisController.putTaxiById);
  *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
  */
 
-// router.delete('/taxis/:id',TaxisController.deleteByTaxi)
+router.delete('/taxis/:id',TaxisController.deleteByTaxi)
+
 
 export default router;

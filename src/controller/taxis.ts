@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { allTaxisService, createTaxiService, taxiByIdService, updateTaxiService } from "../services/taxis";
+import { allTaxisService, createTaxiService, deleteTaxiService, taxiByIdService, updateTaxiService } from "../services/taxis";
 // import prisma from "../utils/db";
 
 
@@ -63,15 +63,18 @@ export const TaxisController = {
             return res.status(500).json({ message: error.message })
         }
     },
-    // deleteByTaxi: async (req: Request, res: Response) => {
-    //     const { id } = req.params;
-    //     const taxiId = parseInt(id);
-
-    //     const existingTaxi = await prisma.taxis.findUnique({ where: { id: taxiId } });
-    //     if (!existingTaxi) {
-    //         return res.status(404).json({ message: 'No se ha encontrado un taxi con este ID' });
-    //     }
-    //     const taxi = await prisma.taxis.delete({ where: { id: taxiId } });
-    //     return res.status(200).json({ message: 'Se ha eliminado correctamente el Taxi', taxi: taxi });
-    // },
+    deleteByTaxi: async (req: Request, res: Response) => {
+        try {
+            const { id } = req.params;
+    
+            const existingTaxi = await taxiByIdService(id);
+            if (!existingTaxi) {
+                return res.status(404).json({ message: 'No se ha encontrado un taxi con este ID' });
+            }
+            const taxi = await deleteTaxiService(id)
+            return res.status(200).json({ message: 'Se ha eliminado correctamente el Taxi', taxi: taxi });
+        } catch (error:any) {
+            return res.status(500).json({ message: error.message })
+        }
+    },
 }

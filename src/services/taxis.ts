@@ -63,6 +63,16 @@ export  const updateTaxiService = async (id: string, update:any):Promise<any> =>
     } catch (error) {
         throw new Error("Error al actualizar el taxi en la base de datos");
     }
+};
+
+export const  deleteTaxiService = async (id:string): Promise <any>=> {
+    try {
+        const taxiId = parseInt(id);
+        const deleteTaxi = await prisma.taxis.delete({ where: { id: taxiId } });
+        return deleteTaxi;
+    } catch (error) {
+        throw new Error("Error al eliminar taxi en la base de datos");
+    }
 }
 
 

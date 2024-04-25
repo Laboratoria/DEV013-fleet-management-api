@@ -224,7 +224,7 @@ router.post('/taxis', TaxisController.postTaxi);
  *                    $ref: '#/components/schemas/Error'
  */
 
-// router.put('/taxis/:id',TaxisController.putTaxiById);
+router.put('/taxis/:id',TaxisController.putTaxiById);
 
 /**
  * Delete track

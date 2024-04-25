@@ -106,7 +106,7 @@ router.get('/taxis', TaxisController.getAllTaxis);
  *                    $ref: '#/components/schemas/Error'
  */
 
-router.get('/location', TaxisController.getLocationHistory);
+// router.get('/location', TaxisController.getLocationHistory);
 
 
 /**
@@ -224,7 +224,7 @@ router.post('/taxis', TaxisController.postTaxi);
  *                    $ref: '#/components/schemas/Error'
  */
 
-router.put('/taxis/:id',TaxisController.putTaxiById);
+// router.put('/taxis/:id',TaxisController.putTaxiById);
 
 /**
  * Delete track
@@ -251,6 +251,6 @@ router.put('/taxis/:id',TaxisController.putTaxiById);
  *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
  */
 
-router.delete('/taxis/:id',TaxisController.deleteByTaxi)
+// router.delete('/taxis/:id',TaxisController.deleteByTaxi)
 
 export default router;

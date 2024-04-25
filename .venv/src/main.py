@@ -58,20 +58,20 @@ def show_taxis():
                 description: Plate of the taxi.
     """
 
-    # Obtener parámetros de paginación de la solicitud
+    # Get pagination parameters from the request
     limit = request.args.get("limit", default=10, type=int)
     page = request.args.get("page", default=1, type=int)
 
-    # Calcular el índice de inicio basado en la página y el límite
+    # Calculate home index based on page and limit
     start_index = (page - 1) * limit
 
-    # Consultar la base de datos con el límite y el índice de inicio
+    # Query database with limit and starting index
     taxis = Taxi.query.offset(start_index).limit(limit).all()
 
-    # Crear una lista de taxis
+    # Create list
     taxis_list = [{'id': taxi.id, 'plate': taxi.plate} for taxi in taxis]
 
-    # Crear un diccionario para la respuesta
+    # create diccionario
     response = {
         'taxis': taxis_list
     }
@@ -80,6 +80,3 @@ def show_taxis():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-#
-

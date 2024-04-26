@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { TaxisController } from '../controller/taxis';
+import { TaxisController } from '../controller/taxisController';
 
 const router: Router = Router();
 
@@ -108,7 +108,6 @@ router.get('/taxis', TaxisController.getAllTaxis);
 
 // router.get('/location', TaxisController.getLocationHistory);
 
-
 /**
  * Get track
  * @openapi
@@ -151,7 +150,7 @@ router.get('/taxis', TaxisController.getAllTaxis);
  *                 schema:
  *                    $ref: '#/components/schemas/Error'
  */
-router.get('/taxis/:id',TaxisController.getTaxiById);
+router.get('/taxis/:id', TaxisController.getTaxiById);
 
 /**
  * Post Taxi
@@ -224,7 +223,7 @@ router.post('/taxis', TaxisController.postTaxi);
  *                    $ref: '#/components/schemas/Error'
  */
 
-router.put('/taxis/:id',TaxisController.putTaxiById);
+router.put('/taxis/:id', TaxisController.putTaxiById);
 
 /**
  * Delete track
@@ -251,7 +250,7 @@ router.put('/taxis/:id',TaxisController.putTaxiById);
  *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
  */
 
-router.delete('/taxis/:id',TaxisController.deleteByTaxi)
+router.delete('/taxis/:id', TaxisController.deleteByTaxi)
 
 
 export default router;

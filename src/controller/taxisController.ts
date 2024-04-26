@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { allTaxisService, createTaxiService, deleteTaxiService, taxiByIdService, updateTaxiService } from "../services/taxis";
+import { allTaxisService, createTaxiService, deleteTaxiService, taxiByIdService, updateTaxiService,IPaginated } from "../services/taxis";
 // import prisma from "../utils/db";
 
 
@@ -8,7 +8,7 @@ export const TaxisController = {
     // getAllTaxis
     getAllTaxis: async (req: Request, res: Response) => {
         try {
-            const { skip, take } = req.query;
+            const { skip, take }:IPaginated = req.query;
             if (!skip || !take) {
                 return res.status(400).json({ message: "Los parámetros 'skip' y 'take' son obligatorios en la consulta." });
             }
@@ -21,7 +21,7 @@ export const TaxisController = {
     getTaxiById: async (req: Request, res: Response) => {
         try {
             const { id } = req.params;
-            const getId = await taxiByIdService(id)
+            const getId = await taxiByIdService(+id)
             if (!getId) res.status(404).json({ message: 'El id del taxi no se encontro' });
             else return res.status(200).json(getId);
         } catch (error: any) {
@@ -51,11 +51,11 @@ export const TaxisController = {
             if (!Object.keys(req.body).length) {
                 return res.status(400).json({ message: 'El cuerpo de la solicitud está vacío.' })
             }
-            const existingTaxi = await taxiByIdService(id);
+            const existingTaxi = await taxiByIdService(+id);
             if (!existingTaxi) {
                 return res.status(404).json({ message: 'No se ha encontrado un taxi con este ID' });
             }
-            const taxi = await updateTaxiService(id,req.body)
+            const taxi = await updateTaxiService(+id,req.body)
 
             return res.status(200).json(taxi);
 
@@ -67,7 +67,7 @@ export const TaxisController = {
         try {
             const { id } = req.params;
     
-            const existingTaxi = await taxiByIdService(id);
+            const existingTaxi = await taxiByIdService(+id);
             if (!existingTaxi) {
                 return res.status(404).json({ message: 'No se ha encontrado un taxi con este ID' });
             }

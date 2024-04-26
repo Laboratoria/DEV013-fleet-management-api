@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { TrajectoriesController } from "../controller/trajectories";
+import { TrajectoriesController } from "../controller/trajectoriesController";
 
 const router: Router = express.Router();
 

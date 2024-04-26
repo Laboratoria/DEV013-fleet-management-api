@@ -64,21 +64,21 @@ export const TrajectoriesController = {
             return res.status(500).json({ message: error.message })
         }
     },
-    postTrajectories: async (req: Request, res: Response) => {
-        try {
-            const { id, latitude, longitude, taxi_id } = req.body;
+    // postTrajectories: async (req: Request, res: Response) => {
+    //     try {
+    //         const { id, latitude, longitude, taxi_id } = req.body;
 
-            const currentTime = new Date();
-            const newTrajectories = await prisma.trajectories.create({
-                data: {
-                    id, latitude, longitude, taxiId: taxi_id, date: currentTime
-                }
-            });
-            return res.status(201).json(newTrajectories);
-        } catch (error: any) {
-            return res.status(500).json({ message: error.message })
-        }
-    },
+    //         const currentTime = new Date();
+    //         const newTrajectories = await prisma.trajectories.create({
+    //             data: {
+    //                 id, latitude, longitude, taxiId: taxi_id, date: currentTime
+    //             }
+    //         });
+    //         return res.status(201).json(newTrajectories);
+    //     } catch (error: any) {
+    //         return res.status(500).json({ message: error.message })
+    //     }
+    // },
     // putTrajectoryById: async (req: Request, res: Response) => {
     //     try {
     //         const { id } = req.params;
@@ -96,20 +96,20 @@ export const TrajectoriesController = {
 
     //     }
     // },
-    deleteTrajectoriesById: async (req: Request, res: Response) => {
-        try {
-            const { id } = req.params;
-            const existingTrajectories = await prisma.trajectories.findUnique({ where: { id: parseInt(id) } });
-            if (!existingTrajectories) {
-                return res.status(404).json({ message: "La trayectoria no existe." });
-            } else {
-                await prisma.trajectories.delete({ where: { id: parseInt(id) } });
-                return res.status(200).json({ message: "Trayectoria eliminada correctamente." });
-            }
-        } catch (error: any) {
-            return res.status(500).json({ message: 'Error en el servidor' })
-        }
-    },
+    // deleteTrajectoriesById: async (req: Request, res: Response) => {
+    //     try {
+    //         const { id } = req.params;
+    //         const existingTrajectories = await prisma.trajectories.findUnique({ where: { id: parseInt(id) } });
+    //         if (!existingTrajectories) {
+    //             return res.status(404).json({ message: "La trayectoria no existe." });
+    //         } else {
+    //             await prisma.trajectories.delete({ where: { id: parseInt(id) } });
+    //             return res.status(200).json({ message: "Trayectoria eliminada correctamente." });
+    //         }
+    //     } catch (error: any) {
+    //         return res.status(500).json({ message: 'Error en el servidor' })
+    //     }
+    // },
 
     getExportExcel: async (req: Request, res: Response) => {
         try {

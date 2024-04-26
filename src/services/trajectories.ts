@@ -51,6 +51,7 @@ export const lastLocationService= async(skip:number, take:number): Promise<any>=
             LIMIT ${take} `;
     return lastLocation;
 }
+
 export interface ITrajectory {
     id?: number
     taxiId?: number

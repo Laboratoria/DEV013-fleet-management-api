@@ -1,16 +1,15 @@
 import type { Request, Response } from "express";
 import prisma from "../utils/db";
+import { allTrajectoriesServices, countTrajectoriesService, lastLocationService, locationService } from "../services/trajectories";
+import { IPaginated } from "../services/taxis";
 const xl = require('excel4node');
 const nodemailer = require('nodemailer');
 
 export const TrajectoriesController = {
     getAllTrajectories: async (req: Request, res: Response) => {
         try {
-            const { skip, take } = req.query;
-            const trajectories = await prisma.trajectories.findMany({
-                skip: skip ? Number(skip) : undefined,
-                take: take ? Number(take) : undefined,
-            });
+            const { skip, take }:IPaginated= req.query;
+            const trajectories = await allTrajectoriesServices(Number(skip),Number(take))
             return res.status(200).json(trajectories);
         } catch (error: any) {
             return res.status(500).json({ message: error.message })
@@ -18,12 +17,9 @@ export const TrajectoriesController = {
     },
     getTrajectoriesCount: async (req: Request, res: Response) => {
         try {
-            const countTrajectories = await prisma.trajectories.groupBy({
-                by: ['taxiId'],
-                _count: true,
-            });
+            const countTrajectories = await countTrajectoriesService();
 
-            return res.status(201).json(countTrajectories);
+            return res.status(200).json(countTrajectories);
         } catch (error: any) {
             return res.status(500).json({ message: error.message })
         }
@@ -34,23 +30,10 @@ export const TrajectoriesController = {
             const { date } = req.query;
             const { id } = req.params;
             const endDate = new Date(date as string);
-            
+
             endDate.setDate(endDate.getDate() + 1);
-            console.log("🚀 ~ getLocationHistory: ~ endDate:", endDate)
-            const locationHistory = await prisma.trajectories.findMany({
-                where: {
-                    taxiId: parseInt(id), // Convertir a número si es necesario
-                    date: {
-                        gte: new Date(date as string),
-                        lt: endDate
-                    },
-                },
-                select: {
-                    latitude: true,
-                    longitude: true,
-                    date: true,
-                },
-            })
+            // console.log("🚀 ~ getLocationHistory: ~ endDate:", endDate)
+            const locationHistory = await locationService(parseInt(id),new Date(date as string))
             return res.status(200).json(locationHistory);
         } catch (error: any) {
             return res.status(500).json({ message: error.message })
@@ -70,15 +53,11 @@ export const TrajectoriesController = {
     },
     getLastLocation: async (req: Request, res: Response) => {
         try {
-            const lastLocation = await prisma.$queryRaw`
-            SELECT tax.id, tra.date, tra.latitude, tra.longitude
-            FROM "Taxis" tax
-            INNER JOIN (
-              SELECT taxi_id, date, latitude, longitude,
-                     ROW_NUMBER() OVER (PARTITION BY taxi_id ORDER BY date DESC) AS row_num
-              FROM "Trajectories"
-            ) AS tra ON tax.id = tra.taxi_id AND tra.row_num = 1;
-          `;
+            const { skip, take }:IPaginated = req.query;
+            if (!skip || !take) {
+                return res.status(400).json({ message: "Los parámetros 'skip' y 'take' son obligatorios en la consulta." });
+            }
+            const lastLocation = await lastLocationService(Number(skip), Number(take));
             return res.status(200).json(lastLocation);
 
         } catch (error: any) {
@@ -201,8 +180,8 @@ export const TrajectoriesController = {
             // res.send(buffer);
 
             const transporter = nodemailer.createTransport({
-                host:'smtp.gmail.com',
-                port:587,
+                host: 'smtp.gmail.com',
+                port: 587,
                 auth: {
                     user: process.env.MAIL_USER,
                     pass: process.env.PASSWORD,
@@ -210,8 +189,8 @@ export const TrajectoriesController = {
             });
             const emailOptions = {
                 from: `Aylin SCV< ${process.env.MAIL_USER} >`,
-                to: process.env.TO_USER, 
-                subject: nameFile, 
+                to: process.env.TO_USER,
+                subject: nameFile,
                 text: "Attached you will find the file of locations in Excel format.",
                 attachments: [{
                     filename: `${nameFile}.xlsx`,
@@ -219,7 +198,7 @@ export const TrajectoriesController = {
                 }],
             };
             await transporter.sendMail(emailOptions);
-            res.status(200).json({message:'Correo electrónico enviado con éxito'});
+            res.status(200).json({ message: 'Correo electrónico enviado con éxito' });
         } catch (error: any) {
             return res.status(500).json({ message: 'Error en el servidor' })
         }

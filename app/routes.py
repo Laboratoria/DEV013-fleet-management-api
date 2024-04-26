@@ -1,28 +1,20 @@
-import json
-from flask import Flask, request, jsonify
-from markupsafe import escape
-from conection_postgrestsql import connection
-from flask_paginate import Pagination, get_page_args
+from flask import Flask, jsonify
+from models import taxi_model
+# import json
+# from markupsafe import escape
+# from conection_postgrestsql import connection
+# from flask_paginate import Pagination, get_page_args
 
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def getting_taxis():
-   limit = request.args.get("limit", default=10)
-   page = request.args.get("page", default=1)
-   
-   crsr = connection.cursor()
-   crsr.execute(f"SELECT * FROM taxis ORDER BY id ASC LIMIT {limit} OFFSET {page};")
-   tuples_taxis = crsr.fetchall()
+   tuples_taxis = taxi_model()
    dicts_taxis = [{"id": taxi[0], "plate": taxi[1]} for taxi in tuples_taxis]
-   json_taxis = json.dumps(dicts_taxis)
+   json_taxis = jsonify(dicts_taxis)
    
    return json_taxis
 
-# Que la cantidad sea correcta (10)
-# Que el formato sea el correcto (json)
-# Que la pagina sea correcta
-# Que el dato sea el correcto
 
 
 # @app.route("/trajectories", methods=["GET"])

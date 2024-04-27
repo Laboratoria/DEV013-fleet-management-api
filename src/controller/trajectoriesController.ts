@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import prisma from "../utils/db";
-import { allTrajectoriesServices, countTrajectoriesService, lastLocationService, locationService } from "../services/trajectories";
+import { allTrajectoriesServices, countTrajectoriesService, lastLocationService, locationService, trajectoryByIdService } from "../services/trajectories";
 import { IPaginated } from "../services/taxis";
 const xl = require('excel4node');
 const nodemailer = require('nodemailer');
@@ -42,7 +42,7 @@ export const TrajectoriesController = {
     getTrajectoriesById: async (req: Request, res: Response) => {
         try {
             const { id } = req.params;
-            const trajectory = await prisma.trajectories.findUnique({ where: { id: parseInt(id) } });
+            const trajectory = await trajectoryByIdService(parseInt(id));
             if (!trajectory) {
                 return res.status(404).json({ message: 'El id de la trayectoria no se encontro' });
             }

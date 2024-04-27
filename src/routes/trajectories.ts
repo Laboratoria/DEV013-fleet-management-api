@@ -210,7 +210,7 @@ router.get("/location/:id", TrajectoriesController.getLocationHistory);
  *                 schema:
  *                    $ref: '#/components/schemas/Error'
  */
-router.post("/trajectories", TrajectoriesController.postTrajectories);
+// router.post("/trajectories", TrajectoriesController.postTrajectories);
 // router.put("/trajectories/:id", TrajectoriesController.putTrajectoryById);
 
 
@@ -239,10 +239,10 @@ router.get("/lastLocation", TrajectoriesController.getLastLocation);
  *        '500':
  *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
  */
-router.delete(
-  "/trajectories/:id",
-  TrajectoriesController.deleteTrajectoriesById
-);
+// router.delete(
+//   "/trajectories/:id",
+//   TrajectoriesController.deleteTrajectoriesById
+// );
 router.get("/exportExcel", TrajectoriesController.getExportExcel);
 
 export default router;

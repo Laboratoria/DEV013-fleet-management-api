@@ -1,8 +1,6 @@
 
 import request from 'supertest';
 import app from '../src/index';
-import { describe } from 'node:test';
-import { response } from 'express';
 
 describe('GET /taxis', () => {
 

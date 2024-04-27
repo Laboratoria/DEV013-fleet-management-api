@@ -52,6 +52,11 @@ export const lastLocationService= async(skip:number, take:number): Promise<any>=
     return lastLocation;
 }
 
+export const trajectoryByIdService = async(id: number):Promise<any>=>{
+    const trajectory = await prisma.trajectories.findUnique({ where: { id: id } });
+    return  trajectory;
+}
+
 export interface ITrajectory {
     id?: number
     taxiId?: number

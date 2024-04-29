@@ -9,6 +9,9 @@ export const TrajectoriesController = {
     getAllTrajectories: async (req: Request, res: Response) => {
         try {
             const { skip, take }:IPaginated= req.query;
+            if (!skip || !take) {
+                return res.status(400).json({ message: "Los parámetros 'skip' y 'take' son obligatorios en la consulta." });
+            }
             const trajectories = await allTrajectoriesServices(Number(skip),Number(take))
             return res.status(200).json(trajectories);
         } catch (error: any) {

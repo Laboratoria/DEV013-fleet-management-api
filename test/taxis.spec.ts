@@ -18,14 +18,14 @@ describe('GET /taxis', () => {
 
   it('should respond with and id inside the body response', async () => {
     const response = await request(app).get("/taxis").query({ skip: 0, take: 1 });
-    console.log('f', response.body[0])
+    // console.log('f', response.body[0])
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body[0]).toHaveProperty('id');
     expect(typeof response.body[0].id).toBe('number');
   });
   it('should respond with a plate inside the body response', async () => {
     const response = await request(app).get("/taxis").query({ skip: 0, take: 1 });
-    console.log('f', response.body[0])
+    // console.log('f', response.body[0])
     expect(Array.isArray(response.body)).toBe(true);
     expect(response.body[0]).toHaveProperty('plate');
     expect(typeof response.body[0].plate).toBe('string');
@@ -48,7 +48,7 @@ describe('GET /taxis/id', () => {
 
   it("should respond with a status code 404 when taxi id isn't found", async () => {
     const response = await request(app).get('/taxis/3');
-    console.log('body', response.status)
+    // console.log('body', response.status)
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('El id del taxi no se encontro')
   })
@@ -62,7 +62,7 @@ describe('POST/taxis', () => {
       plate: 'NNEF-6666',
     };
     const response = await request(app).post('/taxis').send(newTaxi);
-    console.log("🚀 ~ it ~ response:", response)
+    // console.log("🚀 ~ it ~ response:", response)
     expect(response.status).toBe(201);
     expect(response.body.id).toBe(2);
     expect(response.body.plate).toBe('NNEF-6666');

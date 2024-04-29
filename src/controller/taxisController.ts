@@ -21,8 +21,10 @@ export const TaxisController = {
     getTaxiById: async (req: Request, res: Response) => {
         try {
             const { id } = req.params;
-            const getId = await taxiByIdService(+id)
-            if (!getId) res.status(404).json({ message: 'El id del taxi no se encontro' });
+            const getId = await taxiByIdService(parseInt(id))
+            if (!getId){
+                return res.status(404).json({ message: 'El id del taxi no se encontro' });
+            } 
             else return res.status(200).json(getId);
         } catch (error: any) {
             return res.status(500).json({ message: 'Error en el servidor' })

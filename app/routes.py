@@ -5,15 +5,23 @@ from models import taxi_model
 # from conection_postgrestsql import connection
 # from flask_paginate import Pagination, get_page_args
 
-app = Flask(__name__)
+apçp = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def getting_taxis():
    tuples_taxis = taxi_model()
+   # tuples_taxis = [(21, 'NNEL-8793')]
+   # print(tuples_taxis)
    dicts_taxis = [{"id": taxi[0], "plate": taxi[1]} for taxi in tuples_taxis]
    json_taxis = jsonify(dicts_taxis)
-   
+   # t = type(json_taxis)
+   # print(dicts_taxis)
+   # print(type(dicts_taxis))
+   # print(f"the type is: {t}")
+
    return json_taxis
+
+
 
 
 

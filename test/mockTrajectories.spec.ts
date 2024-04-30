@@ -54,7 +54,7 @@ describe('getLocation', () => {
         const taxiId = 1013;
         const date = new Date('2022-04-01');
         const result = await locationService(taxiId, date);
-        console.log("🚀 ~ it ~ result:", result)
+        // console.log("🚀 ~ it ~ result:", result)
         expect(result).toEqual([
             { id: 1, taxiId: 23, date: '2008-02-02 14:22:40', latitude: 116.30508, longitude: 39.96525 },
             { id: 2, taxiId: 24, date: '2008-02-06 14:22:40', latitude: 116.30509, longitude: 39.86525 }
@@ -80,7 +80,7 @@ describe('getByIdTrajectory', () => {
         const id =2;
         
         const result = await trajectoryByIdService(id);
-        console.log("🚀 ~ it ~ result:", result)
+        // console.log("🚀 ~ it ~ result:", result)
 
         expect(result).toEqual([{ id: 2, date: '2008-02-06 14:22:40', latitude: 116.30509, longitude: 39.86525 }])
         

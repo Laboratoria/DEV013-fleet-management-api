@@ -12,10 +12,10 @@ jest.mock('@prisma/client', () => {
                 { _count: 1138, taxiId: 10133 },
                 { _count: 1701, taxiId: 6598 },
             ]),
-            $queryRaw: jest.fn().mockResolvedValue([
-                { id: 1, date: '2008-02-02 14:22:40', latitude: 116.30508, longitude: 39.96525 },
-                { id: 2, date: '2008-02-06 14:22:40', latitude: 116.30509, longitude: 39.86525 }
-            ]),
+            // $queryRaw: jest.fn().mockResolvedValue([
+            //     { id: 1, date: '2008-02-02 14:22:40', latitude: 116.30508, longitude: 39.96525 },
+            //     { id: 2, date: '2008-02-06 14:22:40', latitude: 116.30509, longitude: 39.86525 }
+            // ]),
             findUnique: jest.fn().mockResolvedValue([{ id: 2, date: '2008-02-06 14:22:40', latitude: 116.30509, longitude: 39.86525 }])
         },
     };

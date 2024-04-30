@@ -1,12 +1,6 @@
 import json
-import os
-# from app.source import reverse_str
 from app.routes import getting_taxis, app
-from app import models
 from flask import jsonify
-
-# def test_should_reverse_string():
-#     assert reverse_str('abc') == 'cba'
 
 def test_getting_taxis():
     with app.test_request_context(

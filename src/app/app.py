@@ -1,9 +1,10 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
-from ..models.models import db
 from flasgger import Swagger
+from ..models.models import db
 from ..routes.taxis import taxi_routes
+from ..routes.trajectories import trajectory_routes
 
 load_dotenv()
 app = Flask(__name__)
@@ -23,9 +24,10 @@ db.init_app(app)
 
 # Register taxi routes
 app.register_blueprint(taxi_routes)
+app.register_blueprint(trajectory_routes)
 
 # Configure Flasgger
 swagger = Swagger(app)
 
-if __name__ == "__main__":
+if __name__ == "__app__":
     app.run(debug=True)

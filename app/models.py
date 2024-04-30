@@ -1,5 +1,5 @@
 from flask import request
-from conection_postgrestsql import connection
+from app.conection_postgrestsql import connection
 
 def taxi_model():
    limit = request.args.get("limit", default=10)

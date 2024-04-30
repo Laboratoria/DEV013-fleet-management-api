@@ -15,7 +15,7 @@ export const TrajectoriesController = {
             const trajectories = await allTrajectoriesServices(Number(skip),Number(take))
             return res.status(200).json(trajectories);
         } catch (error: any) {
-            return res.status(500).json({ message: error.message })
+            return res.status(500).json({ message: 'Error en el servidor' })
         }
     },
     getTrajectoriesCount: async (req: Request, res: Response) => {

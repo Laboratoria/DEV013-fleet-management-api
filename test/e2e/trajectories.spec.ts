@@ -94,6 +94,18 @@ describe('GET /lastLocation', () => {
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body)).toBeTruthy();
         expect(response.body.length > 0).toBeTruthy();
-    })
+    });
+
+    it('should respond with a date inside the body response', async () => {
+        const response = await request(app).get("/lastLocation").query({ skip: 0, take: 1 });
+        // console.log('f', response.body[0])
+        expect(Array.isArray(response.body)).toBe(true);
+        expect(response.body[0]).toHaveProperty('latitude');
+        expect(typeof response.body[0].latitude).toBe('number');
+        expect(response.body[0]).toHaveProperty('longitude');
+        expect(typeof response.body[0].longitude).toBe('number');
+        expect(response.body[0]).toHaveProperty('date');
+        expect(typeof response.body[0].date).toBe('string');
+      });
 })
 

@@ -47,7 +47,7 @@ export const TrajectoriesController = {
             const { id } = req.params;
             const trajectory = await trajectoryByIdService(parseInt(id));
             if (!trajectory) {
-                return res.status(404).json({ message: 'El id de la trayectoria no se encontro' });
+                return res.status(404).json({ message: 'El id de la trayectoria no se encontró' });
             }
             return res.status(200).json(trajectory);
         } catch (error: any) {

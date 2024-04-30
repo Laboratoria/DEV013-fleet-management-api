@@ -107,5 +107,13 @@ describe('GET /lastLocation', () => {
         expect(response.body[0]).toHaveProperty('date');
         expect(typeof response.body[0].date).toBe('string');
       });
+});
+
+describe('GET /exportExcel', () => {
+    it('you must send an e-mail with an Excel attachment containing the location data', async () => {
+        const response = await request(app).get(`/exportExcel`).query({ taxiId: 'GHGH-1458', date: '2008-02-02' });;
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBe('Correo electrónico enviado con éxito');
+    });
 })
 

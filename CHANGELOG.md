@@ -1,3 +1,18 @@
+## 1.1.1 - 4.30.2024
+
+### Learnings
+- Pytest
+
+### Added
+- Tests of endpoint 1
+
+### Changed
+- Refactoring and modularizing end point 1
+
+### Removed
+- Files and code not used
+
+
 ## 1.1.0 - 4.24.2024
 
 ### Learnings

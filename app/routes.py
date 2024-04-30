@@ -1,28 +1,15 @@
 from flask import Flask, jsonify
-from models import taxi_model
-# import json
-# from markupsafe import escape
-# from conection_postgrestsql import connection
-# from flask_paginate import Pagination, get_page_args
+from app.models import taxi_model
+from app.serializers import taxis_serializer
 
-apçp = Flask(__name__)
+app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def getting_taxis():
    tuples_taxis = taxi_model()
-   # tuples_taxis = [(21, 'NNEL-8793')]
-   # print(tuples_taxis)
-   dicts_taxis = [{"id": taxi[0], "plate": taxi[1]} for taxi in tuples_taxis]
+   dicts_taxis = taxis_serializer(tuples_taxis)
    json_taxis = jsonify(dicts_taxis)
-   # t = type(json_taxis)
-   # print(dicts_taxis)
-   # print(type(dicts_taxis))
-   # print(f"the type is: {t}")
-
    return json_taxis
-
-
-
 
 
 # @app.route("/trajectories", methods=["GET"])

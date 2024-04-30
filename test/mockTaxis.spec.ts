@@ -71,6 +71,15 @@ describe('postTaxi', () => {
 
         expect(result).toEqual(newTaxi);
     });
+
+    it('should throw an error when ID is negative', async () => {
+        // Arrange
+        const id = -1;
+        const plate = 'CNCA-0000';
+
+        const result =  await createTaxiService(id, plate);
+        expect(result).rejects.toThrow('El ID del taxi debe ser un número positivo');
+    });
 })
 
 describe('updateTaxi', () => {

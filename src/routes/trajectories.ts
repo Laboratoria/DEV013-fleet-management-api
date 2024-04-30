@@ -175,70 +175,124 @@ router.get("/trajectories/:id", TrajectoriesController.getTrajectoriesById);
  */
 router.get("/location/:id", TrajectoriesController.getLocationHistory);
 
-/**
- * Post Trajectories
- * @openapi
- * /trajectories:
- *    post:
- *      tags:
- *        - Trajectories
- *      summary: "Crear nueva trayectoria"
- *      description: Este endpoint permite agregar una nueva trayectoria manualmente.
- *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *               $ref: '#/components/schemas/Trajectories'
- *      responses:
- *        '201':
- *          description: Operación exitosa. Devuelve la nueva trayectoria creada.
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Trajectories'
- *        '400':
- *          description: Solicitud incorrecta. Puede haber errores en los datos enviados.
- *          content:
- *              application/json:
- *                 schema:
- *                    $ref: '#/components/schemas/Error'
- *        '500':
- *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
- *          content:
- *              application/json:
- *                 schema:
- *                    $ref: '#/components/schemas/Error'
- */
+// /**
+//  * Post Trajectories
+//  * @openapi
+//  * /trajectories:
+//  *    post:
+//  *      tags:
+//  *        - Trajectories
+//  *      summary: "Crear nueva trayectoria"
+//  *      description: Este endpoint permite agregar una nueva trayectoria manualmente.
+//  *      requestBody:
+//  *        required: true
+//  *        content:
+//  *          application/json:
+//  *            schema:
+//  *               $ref: '#/components/schemas/Trajectories'
+//  *      responses:
+//  *        '201':
+//  *          description: Operación exitosa. Devuelve la nueva trayectoria creada.
+//  *          content:
+//  *            application/json:
+//  *              schema:
+//  *                $ref: '#/components/schemas/Trajectories'
+//  *        '400':
+//  *          description: Solicitud incorrecta. Puede haber errores en los datos enviados.
+//  *          content:
+//  *              application/json:
+//  *                 schema:
+//  *                    $ref: '#/components/schemas/Error'
+//  *        '500':
+//  *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+//  *          content:
+//  *              application/json:
+//  *                 schema:
+//  *                    $ref: '#/components/schemas/Error'
+//  */
 // router.post("/trajectories", TrajectoriesController.postTrajectories);
 // router.put("/trajectories/:id", TrajectoriesController.putTrajectoryById);
 
 
-router.get("/lastLocation", TrajectoriesController.getLastLocation);
+
 /**
- * Delete track
+ * Get track
  * @openapi
- * /trajectories/{id}:
- *    delete:
+ * /lastLocation:
+ *    get:
  *      tags:
  *        - Trajectories
- *      summary: "Eliminar una trayectoria existente por su ID"
- *      description: "Este endpoint permite eliminar una trayectoria existente según su ID."
+ *      summary: "Obtener la última ubicación de los taxis"
+ *      description: Este endpoint es para obtener la última ubicación de los taxis
  *      parameters:
- *        - in: path
- *          name: id
+ *        - in: query
+ *          name: skip
  *          required: true
- *          description: ID del trayectoria a eliminar
  *          schema:
  *            type: integer
+ *            minimum: 1
+ *          description: Número de página que se desea obtener
+ *        - in: query
+ *          name: take
+ *          required: true
+ *          schema:
+ *            type: integer
+ *            minimum: 1
+ *            maximum: 100
+ *            default: 10
+ *          description: Número máximo de resultados por página
  *      responses:
  *        '200':
- *          description: Trayectoria eliminado correctamente.
- *        '404':
- *          description: No se ha encontrado un trayectoria con el ID proporcionado.
- *        '500':
- *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ *          description: Operación exitosa.
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: array
+ *                      items:
+ *                          type: object
+ *                          properties:
+ *                              taxiId:
+ *                                  type: integer
+ *                                  description: "Id del taxi"
+ *                                  default: 6598
+ *                              date:
+ *                                  type: string 
+ *                                  format: date-time
+ *                                  description: "Fecha y hora de la ubicación"
+ *                              latitude:
+ *                                  type: number
+ *                                  description: "Latitud de la ubicación"
+ *                                  default: 116.32706
+ *                              longitude:
+ *                                  type: number
+ *                                  description: "Longitud de la ubicación"
+ *                                  default: 39.84801
  */
+router.get("/lastLocation", TrajectoriesController.getLastLocation);
+// /**
+//  * Delete track
+//  * @openapi
+//  * /trajectories/{id}:
+//  *    delete:
+//  *      tags:
+//  *        - Trajectories
+//  *      summary: "Eliminar una trayectoria existente por su ID"
+//  *      description: "Este endpoint permite eliminar una trayectoria existente según su ID."
+//  *      parameters:
+//  *        - in: path
+//  *          name: id
+//  *          required: true
+//  *          description: ID del trayectoria a eliminar
+//  *          schema:
+//  *            type: integer
+//  *      responses:
+//  *        '200':
+//  *          description: Trayectoria eliminado correctamente.
+//  *        '404':
+//  *          description: No se ha encontrado un trayectoria con el ID proporcionado.
+//  *        '500':
+//  *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+//  */
 // router.delete(
 //   "/trajectories/:id",
 //   TrajectoriesController.deleteTrajectoriesById

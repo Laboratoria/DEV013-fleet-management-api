@@ -67,7 +67,7 @@ describe('postTaxi', () => {
         };
 
         const result = await createTaxiService(id, plate);
-        console.log("🚀 ~ it ~ resul3t:", result)
+        // console.log("🚀 ~ it ~ resul3t:", result)
 
         expect(result).toEqual(newTaxi);
     });

@@ -1,5 +1,5 @@
 from flask import request
-from app.conection_postgrestsql import connection
+from conection_postgrestsql import connection
 
 def taxi_model():
    limit = request.args.get("limit", default=10)
@@ -8,3 +8,4 @@ def taxi_model():
    crsr.execute(f"SELECT * FROM taxis ORDER BY id ASC LIMIT {limit} OFFSET {page};")
    tuples_taxis = crsr.fetchall()
    return tuples_taxis
+   

@@ -18,9 +18,6 @@ export const taxiByIdService = async (id: number): Promise<any> => {
 };
 
 export const createTaxiService = async (id: number, plate: string): Promise<any> => {
-    // if (id <= 0) {
-    //     throw new Error("El ID del taxi debe ser un número positivo");
-    // }
 
     const newTaxi = await prisma.taxis.create({
         data: {

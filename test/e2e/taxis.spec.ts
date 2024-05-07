@@ -13,6 +13,7 @@ describe('GET /taxis', () => {
     const response = await request(app).get('/taxis').query({ skip: 0, take: 10 });
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body)).toBeTruthy();
+    // console.log("🚀 ~ it ~ response.body:", response.body)
     expect(response.body.length > 0).toBeTruthy();
   });
 

@@ -10,7 +10,8 @@
     "start": "npx tsc && node ./build/index.js",
     "dev": "nodemon index.ts",
     "build": "tsc && cp ./src/*.js ./build",
-    "test": "jest --verbose --collect-coverage"
+    "test": "jest --verbose --collect-coverage",
+    "cli": "node cli.js"
   },
   "repository": {
     "type": "git",

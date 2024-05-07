@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, json, request
-from models import taxi_model, trajectories_model
+from db_servings import get_taxi_from_db, get_trajectories_from_db
 from serializers import taxis_serializer, trajectories_serializer
 from conection_postgrestsql import connection
 
@@ -11,19 +11,17 @@ def home_page():
    return "Home"
 
 @app.route("/taxis", methods=["GET"])
-def getting_taxis():
-   tuples_taxis = taxi_model()
+def get_taxis():
+   tuples_taxis = get_taxi_from_db()
    dicts_taxis = taxis_serializer(tuples_taxis)
    return jsonify(dicts_taxis)
 
+# ToDo qué hace @app.route
 @app.route("/trajectories", methods=["GET"])
-def getting_trajectories():
-   tuples_trajectories = trajectories_model()
+def get_trajectories():
+   tuples_trajectories = get_trajectories_from_db()
    dicts_trajectories = trajectories_serializer(tuples_trajectories)
-   # print(dicts_trajectories)
    json_trajectories = jsonify(dicts_trajectories)
-   # print(json_trajectories)
-   print(json_trajectories)
    return json_trajectories
 
 if __name__ == "__main__":

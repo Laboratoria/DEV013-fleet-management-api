@@ -1,6 +1,7 @@
 import psycopg2
 import os
 
+# TODO definir estrategia para cerrar conexion
 connection = psycopg2.connect(
     host = os.getenv("POSTGRES_HOST"),
     user = os.getenv("POSTGRES_USER"),
@@ -8,4 +9,3 @@ connection = psycopg2.connect(
     database = os.getenv("POSTGRES_DATABASE"),
     port = 5432
 )
-

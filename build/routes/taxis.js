@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const taxis_1 = require("../controller/taxis");
+const taxisController_1 = require("../controller/taxisController");
 const router = (0, express_1.Router)();
 /**
  * Get track
@@ -37,7 +37,7 @@ const router = (0, express_1.Router)();
  *                      items:
  *                          $ref: '#/components/schemas/Taxis'
  */
-router.get('/taxis', taxis_1.TaxisController.getAllTaxis);
+router.get('/taxis', taxisController_1.TaxisController.getAllTaxis);
 /**
  * Get track
  * @openapi
@@ -63,37 +63,89 @@ router.get('/taxis', taxis_1.TaxisController.getAllTaxis);
  *            default: 10
  *          description: Número máximo de resultados por página
  *      responses:
- *        '200':
- *          description: Operación exitosa.
+  *        '200':
+ *          description: Operación exitosa. Devuelve el historial de ubicaciones de los taxis.
  *          content:
- *              application/json:
- *                  schema:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  type: object
+ *                  properties:
+ *                    id:
+ *                      type: integer
+ *                      description: "Id del taxi"
+ *                      default: 6598
+ *                    plate:
+ *                      type: string
+ *                      description: "Placa del taxi"
+ *                      default: "FHLB-7962"
+ *                    Trajectories:
  *                      type: array
  *                      items:
- *                          $ref: '#/components/schemas/Taxis'
+ *                        type: object
+ *                        properties:
+ *                          latitude:
+ *                            type: number
+ *                            description: "Latitud de la ubicación"
+ *                          longitude:
+ *                            type: number
+ *                            description: "Longitud de la ubicación"
+ *                          date:
+ *                            type: string
+ *                            format: date-time
+ *                            description: "Fecha y hora de la ubicación"
+ *        '500':
+ *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
  */
-router.get('/location', taxis_1.TaxisController.getLocationHistory);
+// router.get('/location', TaxisController.getLocationHistory);
 /**
  * Get track
  * @openapi
- * /lastLocation:
+ * /taxis/{id}:
  *    get:
  *      tags:
  *        - Taxis
- *      summary: "Obtener la última ubicación de cada taxi"
- *      description: Este endpoint es para obtener latitud, longitud y fecha de cada taxi
+ *      summary: "Buscar taxi por Id"
+ *      description: "Este endpoint es para buscar taxi por Id."
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          required: true
+ *          description: ID del taxi a buscar
+ *          schema:
+ *            type: integer
  *      responses:
  *        '200':
- *          description: Operación exitosa.
+ *          description: Operación exitosa. Devuelve el taxi buscado.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Taxis'
+ *        '400':
+ *          description: Solicitud incorrecta. Puede haber errores en los datos enviados.
  *          content:
  *              application/json:
- *                  schema:
- *                      type: array
- *                      items:
- *                          $ref: '#/components/schemas/Taxis'
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ *        '404':
+ *          description: No se ha encontrado el taxi con el ID proporcionado.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
+ *        '500':
+ *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
+ *          content:
+ *              application/json:
+ *                 schema:
+ *                    $ref: '#/components/schemas/Error'
  */
-router.get('/lastLocation', taxis_1.TaxisController.getLastLocation);
-router.get('/taxis/:id', taxis_1.TaxisController.getTaxiById);
+router.get('/taxis/:id', taxisController_1.TaxisController.getTaxiById);
 /**
  * Post Taxi
  * @openapi
@@ -113,7 +165,7 @@ router.get('/taxis/:id', taxis_1.TaxisController.getTaxiById);
  *        '201':
  *          description: Taxi creado exitosamente.
  */
-router.post('/taxis', taxis_1.TaxisController.postTaxi);
+router.post('/taxis', taxisController_1.TaxisController.postTaxi);
 /**
  * Put track
  * @openapi
@@ -163,7 +215,7 @@ router.post('/taxis', taxis_1.TaxisController.postTaxi);
  *                 schema:
  *                    $ref: '#/components/schemas/Error'
  */
-router.put('/taxis/:id', taxis_1.TaxisController.putTaxiById);
+router.put('/taxis/:id', taxisController_1.TaxisController.putTaxiById);
 /**
  * Delete track
  * @openapi
@@ -188,5 +240,5 @@ router.put('/taxis/:id', taxis_1.TaxisController.putTaxiById);
  *        '500':
  *          description: Error interno del servidor. Hubo un problema al procesar la solicitud.
  */
-router.delete('/taxis/:id', taxis_1.TaxisController.deleteByTaxi);
+router.delete('/taxis/:id', taxisController_1.TaxisController.deleteByTaxi);
 exports.default = router;

@@ -1,3 +1,22 @@
+## 0.0.0 - 5.8.2024
+
+### Learnings
+- Manipulate time types
+
+### Added
+- End point 2
+- Test for end point 2
+
+### Changed
+- Name of functions
+- Name of some files
+
+### Fixed
+- .gitihnore
+
+### Removed
+- Files for testing tests
+
 ## 1.1.1 - 4.30.2024
 
 ### Learnings

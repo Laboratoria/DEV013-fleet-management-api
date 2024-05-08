@@ -10,8 +10,13 @@ connection = psycopg2.connect(
     port = 5432
 )
 
-# csr = connection.cursor()  
-# csr.close()
+# Setting auto commit to True 
+# connection.autocommit = True
+  
+# Creating a cursor object using the 
+# cursor() method 
+# cursor = connection.cursor() 
+
 # connection.close()
 
 # print(connection.is_connected())

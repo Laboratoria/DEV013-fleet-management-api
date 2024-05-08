@@ -14,8 +14,8 @@ export const TaxisController = {
             }
             const taxis = await allTaxisService(Number(skip), Number(take))
             return res.status(200).json(taxis);
-        } catch (error: any) {
-            return res.status(500).json({ message: 'Error en el servidor' ,error})
+        } catch (error) {
+            return res.status(500).json({ message: error})
         }
     },
     getTaxiById: async (req: Request, res: Response) => {
@@ -26,8 +26,8 @@ export const TaxisController = {
                 return res.status(404).json({ message: 'El id del taxi no se encontro' });
             } 
             else return res.status(200).json(getId);
-        } catch (error: any) {
-            return res.status(500).json({ message: 'Error en el servidor' })
+        } catch (error) {
+            return res.status(500).json({  message: error })
         }
     },
     postTaxi: async (req: Request, res: Response) => {
@@ -42,8 +42,8 @@ export const TaxisController = {
             }
             const newTaxi = await createTaxiService(id,plate)
             return res.status(201).json(newTaxi);
-        } catch (error: any) {
-            return res.status(500).json({ message: 'Error en el servidor' })
+        } catch (error) {
+            return res.status(500).json({ message: error})
         }
     },
     putTaxiById: async (req: Request, res: Response) => {
@@ -61,8 +61,8 @@ export const TaxisController = {
 
             return res.status(200).json(taxi);
 
-        } catch (error: any) {
-            return res.status(500).json({ message: error.message })
+        } catch (error) {
+            return res.status(500).json({  message: error })
         }
     },
     deleteByTaxi: async (req: Request, res: Response) => {
@@ -75,8 +75,8 @@ export const TaxisController = {
             }
             const taxi = await deleteTaxiService(id)
             return res.status(200).json({ message: 'Se ha eliminado correctamente el Taxi', taxi: taxi });
-        } catch (error:any) {
-            return res.status(500).json({ message: error.message })
+        } catch (error) {
+            return res.status(500).json({  message: error })
         }
     },
 }

@@ -9,3 +9,9 @@ connection = psycopg2.connect(
     database = os.getenv("POSTGRES_DATABASE"),
     port = 5432
 )
+
+# csr = connection.cursor()  
+# csr.close()
+# connection.close()
+
+# print(connection.is_connected())

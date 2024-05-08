@@ -1,6 +1,4 @@
-# import json
 from app.routes import get_taxis, app
-from flask import jsonify
 
 def test_get_taxis():
     with app.test_request_context(

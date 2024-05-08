@@ -1,5 +1,5 @@
 import datetime
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 from flask import request
 from conection_postgrestsql import connection
 

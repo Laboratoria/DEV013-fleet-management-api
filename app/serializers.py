@@ -3,3 +3,5 @@ def taxis_serializer(tuples_taxis):
 
 def trajectories_serializer(tuples_trajectories):
     return [{"taxi_id": taxi_id[1], "date": taxi_id[2], "latitude": taxi_id[3], "longitude": taxi_id[4]} for taxi_id in tuples_trajectories]
+
+# intentar test con flask test client

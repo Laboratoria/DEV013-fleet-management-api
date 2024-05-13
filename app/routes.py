@@ -13,15 +13,14 @@ def home_page():
 def get_taxis():
    tuples_taxis = get_taxi_from_db()
    dicts_taxis = taxis_serializer(tuples_taxis)
-   # print(f"printing taxis {dicts_taxis}")
    return jsonify(dicts_taxis)
+# probar jsonify tuplas
 
 # ToDo qué hace @app.route
 @app.route("/trajectories", methods=["GET"])
 def get_trajectories():
    tuples_trajectories = get_trajectories_from_db()
    dicts_trajectories = trajectories_serializer(tuples_trajectories)
-   # print(f"printing trajectories {dicts_trajectories}")
    json_trajectories = jsonify(dicts_trajectories)
    return json_trajectories
 

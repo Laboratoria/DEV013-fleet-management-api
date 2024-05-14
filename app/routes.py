@@ -1,7 +1,7 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify
 from db_servings import get_taxi_from_db, get_trajectories_from_db, get_latest_from_db
 from serializers import taxis_serializer, trajectories_serializer, latest_serializer
-from conection_postgrestsql import connection
+# from conection_postgrestsql import connection
 
 app = Flask(__name__)
 
@@ -27,6 +27,7 @@ def get_trajectories():
 @app.route("/trajectories/latest", methods=["GET"])
 def get_latest_trajectory():
    tuple_latest = get_latest_from_db()
+   print(f"printing {tuple_latest}")
    dicts_latest = latest_serializer(tuple_latest)
    json_latest = jsonify(dicts_latest)
    return json_latest

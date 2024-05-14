@@ -22,6 +22,8 @@ def get_trajectories():
 @app.route("/trajectories/latest", methods=["GET"])
 def get_latest_trajectory():
    tuple_latest = get_latest_from_db()
+   print(tuple_latest)
+   print(jsonify(latest_serializer(tuple_latest)))
    return jsonify(latest_serializer(tuple_latest))
 
 if __name__ == "__main__":

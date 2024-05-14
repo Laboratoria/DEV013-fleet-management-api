@@ -30,7 +30,9 @@ def test_trajectories_ser():
     assert trajectories_serializer(trajectories_tuple) == expected_value
 
 def test_latest_ser():
-    expected_value = [{'taxi_id': 6598, 'plate': 'FHLB-7962', 'date': datetime.datetime(2008, 2, 8, 17, 37, 43), 'latitude': 116.32706, 'longitude': 39.84801}, {'taxi_id': 7088, 'plate': 'HDBL-4695', 'date': datetime.datetime(2008, 2, 8, 12, 14, 46), 'latitude': 117.11593, 'longitude': 40.1541}, {'taxi_id': 7249, 'plate': 'CNCJ-2997', 'date': datetime.datetime(2008, 2, 8, 17, 36, 33), 'latitude': 116.291, 'longitude': 39.88672}]
+    expected_value = [{'taxi_id': 6598, 'plate': 'FHLB-7962', 'date': datetime.datetime(2008, 2, 8, 17, 37, 43), 'latitude': 116.32706, 'longitude': 39.84801},
+                      {'taxi_id': 7088, 'plate': 'HDBL-4695', 'date': datetime.datetime(2008, 2, 8, 12, 14, 46), 'latitude': 117.11593, 'longitude': 40.1541},
+                      {'taxi_id': 7249, 'plate': 'CNCJ-2997', 'date': datetime.datetime(2008, 2, 8, 17, 36, 33), 'latitude': 116.291, 'longitude': 39.88672}]
     assert latest_serializer(latest_tuple) == expected_value
 
     # intentar test con flask test client

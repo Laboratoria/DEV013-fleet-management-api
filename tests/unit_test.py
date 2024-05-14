@@ -34,3 +34,5 @@ def test_latest_ser():
     assert latest_serializer(latest_tuple) == expected_value
 
     # intentar test con flask test client
+    # impersonar psicopg
+    # mock db

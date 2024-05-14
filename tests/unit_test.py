@@ -1,4 +1,4 @@
-from app.serializers import taxis_serializer, trajectories_serializer, latest_serializer
+from app.utils import taxis_serializer, trajectories_serializer, latest_serializer
 from .mock_tuples import taxis_tuple, trajectories_tuple, latest_tuple
 from .mock_expected_values import expected_taxis, expected_trajectories, expected_latests
 import datetime

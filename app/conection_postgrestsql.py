@@ -10,3 +10,5 @@ def connection():
     port = 5432
     )
     return connection
+
+# continuar close

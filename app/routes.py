@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
-from .servings_db import get_taxi_from_db, get_trajectories_from_db, get_latest_from_db
-from .serializers import taxis_serializer, trajectories_serializer, latest_serializer
+from .models.taxis import get_taxi_from_db
+from .models.trajectories import get_trajectories_from_db, get_latest_from_db
+from .utils import taxis_serializer, trajectories_serializer, latest_serializer
 
 app = Flask(__name__)
 

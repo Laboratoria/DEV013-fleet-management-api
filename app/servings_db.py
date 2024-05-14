@@ -1,7 +1,7 @@
 # import datetime
 # from datetime import datetime, timedelta
 from flask import request
-from conection_postgrestsql import connection
+from .conection_postgrestsql import connection
 
 def get_taxi_from_db():
    limit = request.args.get("limit", default=10)
@@ -20,7 +20,7 @@ def get_trajectories_from_db():
    return crsr.fetchall()
 
 def get_latest_from_db():
-   limit = request.args.get("limit", default=10)
+   limit = request.args.get("limit", default=3)
    page = request.args.get("page", default=1)
    crsr = connection.cursor()
    crsr.execute(f"SELECT DISTINCT ON (taxi_id) * FROM taxis JOIN trajectories ON taxis.id = trajectories.taxi_id ORDER BY taxi_id ASC, date DESC LIMIT {limit} OFFSET {page};")

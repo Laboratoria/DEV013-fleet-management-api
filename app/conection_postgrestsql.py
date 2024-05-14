@@ -11,4 +11,7 @@ def connection():
     )
     return connection
 
-# continuar close
+def close_crsr():
+    crsr = connection().cursor()
+    closed = crsr.close()
+    return closed

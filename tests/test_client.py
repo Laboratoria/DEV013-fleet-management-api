@@ -24,10 +24,7 @@ from app.routes import get_taxis, app
 #         assert response.json == expected_value
 
 def test_taxis_status(client):
-    # with app.test_request_context(
-    #     "/taxis", query_string={"limit": 1, "page": 1}
-    # ):
-        """Testing taxis status"""
-        response = client.get("/taxis")
-        assert response.status_code == 200
+    """Testing taxis status"""
+    response = client.get("/taxis")
+    assert response.status_code == 200
 

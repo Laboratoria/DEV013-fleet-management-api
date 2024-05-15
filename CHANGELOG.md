@@ -1,19 +1,22 @@
 ## 1.2.0 - 0.0.2024
 
 ### Learnings
-- ok
+- New way for dates on pSQL
 
 ### Added
-- ok
+- Endpoint 3
+- Tests for other endpoints
+- Models folder
 
 ### Changed
--
+- Name of files
+- Models
 
 ### Fixed
--
+- Cursos closed
 
 ### Removed
--
+- Lines to jsonify
 
 ## 1.1.2 - 5.8.2024
 
@@ -100,19 +103,16 @@ git log --all --since='7 days ago' --oneline --format="* %h %s (%an) %as"
 ## 0.0.0 - 0.0.2024
 
 ### Learnings
-- New way for dates on pSQL
+- ok
 
 ### Added
-- Endpoint 3
-- Tests for other endpoints
-- Models folder
+- ok
 
 ### Changed
-- Name of files
-- Models
+-
 
 ### Fixed
-- Cursos closed
+-
 
 ### Removed
-- Lines to jsonify
+-

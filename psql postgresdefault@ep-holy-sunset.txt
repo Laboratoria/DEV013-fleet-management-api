@@ -1,0 +1,1 @@
+psql "postgres://default:************@ep-holy-sunset-a405zt5y.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
